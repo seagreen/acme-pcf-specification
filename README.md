@@ -6,7 +6,7 @@
 
 ## The Solution
 
-Make *RealWorld*-like specifications for more things than webapps.
+Make RealWorld-like specifications for more things than webapps.
 
 ## PCF
 
@@ -32,7 +32,7 @@ Output:
 
 ## Specification
 
-Section 2 of Plotkin's [paper](http://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf), "2. The programming language, PCF"
+This is based off of section 2 of Plotkin's [paper](http://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf): "2. The programming language, PCF".
 
 Plotkin's paper doesn't provide a concrete syntax, so we make one up.
 
@@ -40,7 +40,7 @@ TODO: Informal description of syntax
 
 We provide [test-cases](./misc/generated/test-cases.json) for parsing and evaluating it.
 
-Additionally, we add two constants to the language, which is allowed by section 2.
+Additionally, we add two builtins to the language, which is allowed by section 2:
 
 + `let`: for ease of writing code. It's sugar for abstracting and applying, and not polymorphic.
 
