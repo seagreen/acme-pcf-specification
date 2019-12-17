@@ -1,0 +1,146 @@
+{
+    "eval_tests": [
+        {
+            "should_succeed": true,
+            "name": "lam",
+            "source": "\\x : Nat. x",
+            "expected": null
+        },
+        {
+            "should_succeed": true,
+            "name": "app",
+            "source": "(\\x : Nat. x) 1",
+            "expected": null
+        },
+        {
+            "should_succeed": true,
+            "name": "let",
+            "source": "let a = 1 in a",
+            "expected": 1
+        },
+        {
+            "should_succeed": true,
+            "name": "if-then-else",
+            "source": "if true then 1 else 0",
+            "expected": 1
+        },
+        {
+            "should_succeed": true,
+            "name": "suc",
+            "source": "suc 0",
+            "expected": 1
+        },
+        {
+            "should_succeed": true,
+            "name": "pred",
+            "source": "pred 1",
+            "expected": 0
+        },
+        {
+            "should_succeed": true,
+            "name": "pred-0",
+            "source": "pred 0",
+            "expected": 0
+        },
+        {
+            "should_succeed": true,
+            "name": "is-zero",
+            "source": "is-zero 0",
+            "expected": true
+        },
+        {
+            "should_succeed": true,
+            "name": "fix-simple",
+            "source": "fix (\\x : Nat -> Nat. 1)",
+            "expected": 1
+        },
+        {
+            "should_succeed": true,
+            "name": "fix-realistic",
+            "source": "(fix (\\rec : Nat -> Nat. \\x : Nat. if is-zero x then 0 else rec (pred x))) 2",
+            "expected": 0
+        }
+    ],
+    "parse_tests": [
+        {
+            "should_succeed": true,
+            "name": "var",
+            "source": "x"
+        },
+        {
+            "should_succeed": true,
+            "name": "lam",
+            "source": "\\x : Nat. x"
+        },
+        {
+            "should_succeed": true,
+            "name": "app",
+            "source": "f a"
+        },
+        {
+            "should_succeed": true,
+            "name": "app2",
+            "source": "f a b"
+        },
+        {
+            "should_succeed": true,
+            "name": "app-parens",
+            "source": "f (a b)"
+        },
+        {
+            "should_succeed": true,
+            "name": "app-extraneous-parens",
+            "source": "(f a) b"
+        },
+        {
+            "should_succeed": true,
+            "name": "let",
+            "source": "let a = 1 in a"
+        },
+        {
+            "should_succeed": true,
+            "name": "fix",
+            "source": "fix (\\x : Nat -> Nat. 1)"
+        },
+        {
+            "should_succeed": true,
+            "name": "bool-true",
+            "source": "true"
+        },
+        {
+            "should_succeed": true,
+            "name": "bool-false",
+            "source": "false"
+        },
+        {
+            "should_succeed": true,
+            "name": "if-then-else",
+            "source": "if true then 1 else 0"
+        },
+        {
+            "should_succeed": true,
+            "name": "nat",
+            "source": "1"
+        },
+        {
+            "should_succeed": true,
+            "name": "type-bool",
+            "source": "\\x : Bool. x"
+        },
+        {
+            "should_succeed": true,
+            "name": "type-bool-to-bool",
+            "source": "\\x : Bool -> Bool. x"
+        },
+        {
+            "should_succeed": true,
+            "name": "type-bool3",
+            "source": "\\x : Bool -> Bool -> Bool. x"
+        },
+        {
+            "should_succeed": true,
+            "name": "ignore-newlines",
+            "source": "f a\nb\n  c\n"
+        }
+    ]
+}

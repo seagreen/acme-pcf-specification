@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fe0e28615a8cab30e70581d292cbbf0154e24468fe049b6fc814c49783dce426
+-- hash: bf21b9c468cb8513ff7944a1568c158e58242b5f1ac7f3d6d926695fbe59ee03
 
 name:           acme-pcf
 version:        0.1
@@ -22,10 +22,12 @@ library
       Paths_acme_pcf
   hs-source-dirs:
       src
-  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NamedFieldPuns NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
   ghc-options: -Wall
   build-depends:
-      base
+      aeson
+    , aeson-pretty
+    , base
     , bytestring
     , containers
     , directory
@@ -44,10 +46,12 @@ executable acme-pcf
       Paths_acme_pcf
   hs-source-dirs:
       ./.
-  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NamedFieldPuns NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
   ghc-options: -Wall -threaded -rtsopts
   build-depends:
       acme-pcf
+    , aeson
+    , aeson-pretty
     , base
     , bytestring
     , containers
@@ -69,11 +73,13 @@ test-suite doctest
       Paths_acme_pcf
   hs-source-dirs:
       doctest
-  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NamedFieldPuns NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
   ghc-options: -Wall
   build-depends:
       Glob
     , acme-pcf
+    , aeson
+    , aeson-pretty
     , base
     , bytestring
     , containers
@@ -95,10 +101,12 @@ test-suite spec
       Paths_acme_pcf
   hs-source-dirs:
       test
-  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NamedFieldPuns NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
   ghc-options: -Wall
   build-depends:
       acme-pcf
+    , aeson
+    , aeson-pretty
     , base
     , bytestring
     , containers

@@ -23,6 +23,7 @@ default-extensions:
   - InstanceSigs
   - LambdaCase
   - MultiParamTypeClasses
+  - NamedFieldPuns
   - NoImplicitPrelude
   - OverloadedStrings
   - RankNTypes
@@ -38,6 +39,8 @@ dependencies:
 
   # Other
 
+  - aeson
+  - aeson-pretty
   - base
   - bytestring
   - containers

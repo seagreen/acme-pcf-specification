@@ -1,26 +1,43 @@
 module Main where
 
+import Data.Aeson
+import Data.Aeson.Encode.Pretty (encodePretty)
 import PCF.Prelude hiding (parseTest)
-import Test.Hspec
-
 import PCF.Eval (eval, erase)
 import PCF.Parse (parse)
 import PCF.Test.Eval (Result(..))
+import Test.Hspec
 
+import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as Text
 import qualified PCF.Eval as Untyped
 import qualified PCF.Test.Eval
 import qualified PCF.Test.Parse
 import qualified Text.Megaparsec as Mega
 
+data JsonTests = JsonTests
+  { parseTests :: [PCF.Test.Parse.TestCase]
+  , evalTests :: [PCF.Test.Eval.TestCase]
+  } deriving (Eq, Show, Generic)
+
+instance ToJSON JsonTests where
+  toJSON = genericToJSON defaultOptions { fieldLabelModifier = camelTo2 '_' }
+
+writeJsonFile :: IO ()
+writeJsonFile =
+  LBS.writeFile
+    "test-cases.json"
+    (encodePretty (JsonTests PCF.Test.Parse.tests PCF.Test.Eval.tests))
+
 main :: IO ()
-main =
+main = do
+  writeJsonFile
   hspec do
     describe "parser" (for_ PCF.Test.Parse.tests parseTest)
     describe "eval" (for_ PCF.Test.Eval.tests evalTest)
 
 parseTest :: PCF.Test.Parse.TestCase -> Spec
-parseTest (PCF.Test.Parse.TestCase name _desc _ src) =
+parseTest (PCF.Test.Parse.TestCase name _ src) =
   it
     (Text.unpack name)
     case parse src of
@@ -31,7 +48,7 @@ parseTest (PCF.Test.Parse.TestCase name _desc _ src) =
         True `shouldBe` True
 
 evalTest :: PCF.Test.Eval.TestCase -> Spec
-evalTest (PCF.Test.Eval.TestCase name _desc expected src) =
+evalTest (PCF.Test.Eval.TestCase name expected src) =
   it
     (Text.unpack name)
     case parse src of
