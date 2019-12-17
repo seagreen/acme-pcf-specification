@@ -1,0 +1,77 @@
+name: acme-pcf
+version: 0.1
+default-extensions:
+  # NOTE: Keep in sync with ./doctest/DocTest.hs and ./.stylish-haskell.yaml
+
+  # Notable
+
+  - StrictData
+
+  # Other
+
+  - BlockArguments
+  - DeriveAnyClass
+  - DeriveDataTypeable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DerivingStrategies
+  - ExistentialQuantification
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - LambdaCase
+  - MultiParamTypeClasses
+  - NoImplicitPrelude
+  - OverloadedStrings
+  - RankNTypes
+  - ScopedTypeVariables
+
+ghc-options: -Wall
+dependencies:
+
+  # Notable
+
+  - megaparsec
+  - parser-combinators
+
+  # Other
+
+  - base
+  - bytestring
+  - containers
+  - directory
+  - filepath
+  - hashable
+  - string-qq
+  - text
+  - unordered-containers
+
+library:
+  source-dirs: src
+
+executables:
+  acme-pcf:
+    source-dirs: .
+    main: Main.hs
+    ghc-options: -threaded -rtsopts
+    dependencies:
+      - acme-pcf
+      - optparse-applicative
+
+tests:
+  doctest:
+    source-dirs: doctest
+    main: DocTest.hs
+    dependencies:
+      - acme-pcf
+      - doctest
+      - Glob
+
+  spec:
+    source-dirs: test
+    main: Test.hs
+    dependencies:
+      - acme-pcf
+      - hspec

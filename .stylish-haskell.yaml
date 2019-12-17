@@ -1,0 +1,45 @@
+# https://github.com/jaspervdj/stylish-haskell
+
+steps:
+  - simple_align:
+      cases: false
+      top_level_patterns: false
+      records: false
+  - imports:
+      align: group
+      list_align: after_alias
+      pad_module_names: false
+      long_list_align: new_line
+      empty_list_align: inherit
+      list_padding: 2
+      separate_lists: false
+      space_surround: false
+  - language_pragmas:
+      style: vertical
+      align: false
+      remove_redundant: false
+  - tabs:
+      spaces: 2
+  - trailing_whitespace: {}
+columns: 80
+newline: lf
+language_extensions:
+  - BlockArguments
+  - DeriveAnyClass
+  - DeriveDataTypeable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DerivingStrategies
+  - ExistentialQuantification
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - LambdaCase
+  - MultiParamTypeClasses
+  - NoImplicitPrelude
+  - OverloadedStrings
+  - RankNTypes
+  - ScopedTypeVariables
+  - StrictData

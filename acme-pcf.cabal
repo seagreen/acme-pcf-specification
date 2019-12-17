@@ -1,0 +1,114 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: fe0e28615a8cab30e70581d292cbbf0154e24468fe049b6fc814c49783dce426
+
+name:           acme-pcf
+version:        0.1
+build-type:     Simple
+
+library
+  exposed-modules:
+      PCF.Eval
+      PCF.Expr
+      PCF.Parse
+      PCF.Prelude
+      PCF.Test.Eval
+      PCF.Test.Parse
+  other-modules:
+      Paths_acme_pcf
+  hs-source-dirs:
+      src
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  ghc-options: -Wall
+  build-depends:
+      base
+    , bytestring
+    , containers
+    , directory
+    , filepath
+    , hashable
+    , megaparsec
+    , parser-combinators
+    , string-qq
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+executable acme-pcf
+  main-is: Main.hs
+  other-modules:
+      Paths_acme_pcf
+  hs-source-dirs:
+      ./.
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  ghc-options: -Wall -threaded -rtsopts
+  build-depends:
+      acme-pcf
+    , base
+    , bytestring
+    , containers
+    , directory
+    , filepath
+    , hashable
+    , megaparsec
+    , optparse-applicative
+    , parser-combinators
+    , string-qq
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+test-suite doctest
+  type: exitcode-stdio-1.0
+  main-is: DocTest.hs
+  other-modules:
+      Paths_acme_pcf
+  hs-source-dirs:
+      doctest
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  ghc-options: -Wall
+  build-depends:
+      Glob
+    , acme-pcf
+    , base
+    , bytestring
+    , containers
+    , directory
+    , doctest
+    , filepath
+    , hashable
+    , megaparsec
+    , parser-combinators
+    , string-qq
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: Test.hs
+  other-modules:
+      Paths_acme_pcf
+  hs-source-dirs:
+      test
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  ghc-options: -Wall
+  build-depends:
+      acme-pcf
+    , base
+    , bytestring
+    , containers
+    , directory
+    , filepath
+    , hashable
+    , hspec
+    , megaparsec
+    , parser-combinators
+    , string-qq
+    , text
+    , unordered-containers
+  default-language: Haskell2010

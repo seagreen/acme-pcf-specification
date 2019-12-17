@@ -1,0 +1,4 @@
+--command "stack ghci --test --main-is acme-pcf:spec"
+--test "Main.main"
+--warnings
+--restart package.yaml

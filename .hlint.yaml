@@ -1,0 +1,23 @@
+# https://github.com/ndmitchell/hlint
+# Using d9ca7a012e7e38bbb60142806c9637c021520aab from master (v2.2.3)
+
+- ignore: {name: "Avoid lambda"}
+- ignore: {name: "Eta reduce"}
+- ignore: {name: "Redundant do"}
+- ignore: {name: "Reduce duplication"}
+- ignore: {name: "Replace case with fromMaybe"}
+- ignore: {name: "Use guards"}
+- ignore: {name: "Use bimap"}
+- ignore: {name: "Use lambda-case"}
+- ignore: {name: "Use newtype instead of data"} # Toggle on sometimes
+- ignore: {name: "Use String"} # [Char] is more explicit
+- ignore: {name: "Use tuple-section"}
+- ignore: {name: "Use unless"} # Unless can be hard to read
+- ignore: {name: "Use <$>"}
+
+- modules:
+  - {name: [Data.ByteString], as: BS}
+  - {name: [Data.ByteString.Lazy], as: LBS}
+  - {name: [Data.HashMap.Strict], as: HashMap}
+  - {name: [Data.Text], as: Text}
+  - {name: [Data.Text.IO], as: TIO}
