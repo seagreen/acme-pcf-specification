@@ -26,7 +26,7 @@ instance ToJSON JsonTests where
 writeJsonFile :: IO ()
 writeJsonFile =
   LBS.writeFile
-    "test-cases.json"
+    "./misc/generated/test-cases.json"
     (encodePretty (JsonTests PCF.Test.Parse.tests PCF.Test.Eval.tests))
 
 main :: IO ()
