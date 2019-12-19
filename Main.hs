@@ -1,5 +1,6 @@
 module Main where
 
+import Options.Applicative
 import PCF.Eval (erase, eval)
 import PCF.Parse (parse)
 import PCF.Prelude
@@ -11,6 +12,7 @@ import qualified Text.Megaparsec as Mega (errorBundlePretty)
 
 main :: IO ()
 main = do
+  checkForHelpFlag
   src <- TIO.getContents
   val <- interpret src
   TIO.putStrLn (pretty val)
@@ -39,3 +41,13 @@ pretty = \case
 
   other ->
     Text.pack (show other)
+
+checkForHelpFlag :: IO ()
+checkForHelpFlag =
+  customExecParser (prefs showHelpOnError) configParser
+
+configParser :: ParserInfo ()
+configParser =
+  info
+    (helper <*> pure ())
+    (progDesc "Interpret PCF source from STDIN")

@@ -24,7 +24,6 @@ import Data.Void as X
 import Debug.Trace as X
 
 import Data.ByteString as X (ByteString)
-import Data.Hashable as X (Hashable)
 import Data.HashMap.Strict as X (HashMap)
 import Data.Set as X (Set)
 import Data.Text as X (Text)

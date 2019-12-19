@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bf21b9c468cb8513ff7944a1568c158e58242b5f1ac7f3d6d926695fbe59ee03
+-- hash: 9b7e33b8d39bd3e852d5ca2941e4b6bc136f9a7d7baf2d69f0ad9ab2a3526368
 
 name:           acme-pcf
 version:        0.1
@@ -30,9 +30,6 @@ library
     , base
     , bytestring
     , containers
-    , directory
-    , filepath
-    , hashable
     , megaparsec
     , parser-combinators
     , string-qq
@@ -55,9 +52,6 @@ executable acme-pcf
     , base
     , bytestring
     , containers
-    , directory
-    , filepath
-    , hashable
     , megaparsec
     , optparse-applicative
     , parser-combinators
@@ -83,10 +77,7 @@ test-suite doctest
     , base
     , bytestring
     , containers
-    , directory
     , doctest
-    , filepath
-    , hashable
     , megaparsec
     , parser-combinators
     , string-qq
@@ -110,9 +101,6 @@ test-suite spec
     , base
     , bytestring
     , containers
-    , directory
-    , filepath
-    , hashable
     , hspec
     , megaparsec
     , parser-combinators

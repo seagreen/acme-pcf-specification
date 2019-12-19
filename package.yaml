@@ -44,9 +44,6 @@ dependencies:
   - base
   - bytestring
   - containers
-  - directory
-  - filepath
-  - hashable
   - string-qq
   - text
   - unordered-containers
