@@ -9,6 +9,7 @@ import PCF.Test.Eval (Expected(..))
 import PCF.Typecheck (typecheck)
 import Test.Hspec
 
+import qualified Data.Bifunctor as Bifunctor
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as Text
 import qualified PCF.Eval as Untyped
@@ -26,33 +27,37 @@ data JsonTests = JsonTests
 instance ToJSON JsonTests where
   toJSON = genericToJSON defaultOptions { fieldLabelModifier = camelTo2 '_' }
 
+tests :: JsonTests
+tests =
+  JsonTests TestParse.tests TestTC.tests TestEval.tests
+
 writeJsonFile :: IO ()
 writeJsonFile =
   LBS.writeFile
     "./misc/generated/test-cases.json"
-    (encodePretty (JsonTests
-                    TestParse.tests
-                    TestTC.tests
-                    TestEval.tests))
+    (encodePretty tests)
 
 main :: IO ()
 main = do
   writeJsonFile
   hspec do
-    describe "parser" (for_ TestParse.tests parseTest)
-    describe "typecheck" (for_ TestTC.tests typecheckTest)
-    describe "eval" (for_ TestEval.tests evalTest)
+    describe "parser" (for_ (parseTests tests) parseTest)
+    describe "typecheck" (for_ (typecheckTests tests) typecheckTest)
+    describe "eval" (for_ (evalTests tests) evalTest)
 
 parseTest :: TestParse.TestCase -> Spec
-parseTest TestParse.TestCase{TestParse.name, TestParse.source} =
+parseTest TestParse.TestCase{TestParse.name, TestParse.shouldSucceed, TestParse.source} =
   it
     (Text.unpack name)
-    case parse source of
-      Left e ->
-        fail (Mega.errorBundlePretty e)
+    (let
+       res = Bifunctor.first Mega.errorBundlePretty (parse source)
+     in
+       if shouldSucceed
+         then
+           res `shouldSatisfy` isRight
 
-      Right _ ->
-        True `shouldBe` True
+         else
+           res `shouldSatisfy` isLeft)
 
 typecheckTest :: TestTC.TestCase -> Spec
 typecheckTest TestTC.TestCase{TestTC.name, TestTC.shouldSucceed, TestTC.source} =

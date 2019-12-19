@@ -168,6 +168,11 @@
             "should_succeed": true,
             "name": "ignore-newlines",
             "source": "f a\nb\n  c\n"
+        },
+        {
+            "should_succeed": false,
+            "name": "invalid-symbol",
+            "source": "!"
         }
     ]
 }

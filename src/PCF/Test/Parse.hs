@@ -46,4 +46,6 @@ f a
 b
   c
 |]
+
+  , TestCase "invalid-symbol" False [s|!|]
   ]
