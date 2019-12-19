@@ -4,6 +4,7 @@ import Options.Applicative
 import PCF.Eval (erase, eval)
 import PCF.Parse (parse)
 import PCF.Prelude
+import PCF.Typecheck (typecheck)
 
 import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
@@ -23,7 +24,14 @@ interpret src =
     Left e ->
       exitWithError (Text.pack (Mega.errorBundlePretty e))
 
-    Right expr ->
+    Right expr -> do
+      case typecheck mempty expr of
+        Left e ->
+          exitWithError (Text.pack (show e))
+
+        Right _ ->
+          pure ()
+
       case eval mempty (erase expr) of
         Left e ->
           exitWithError (Text.pack (show e))

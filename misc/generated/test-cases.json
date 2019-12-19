@@ -1,4 +1,21 @@
 {
+    "typecheck_tests": [
+        {
+            "should_succeed": true,
+            "name": "bool-literal",
+            "source": "true"
+        },
+        {
+            "should_succeed": true,
+            "name": "is-zero",
+            "source": "is-zero 1"
+        },
+        {
+            "should_succeed": false,
+            "name": "app-not-function",
+            "source": "0 1"
+        }
+    ],
     "eval_tests": [
         {
             "should_succeed": true,
@@ -51,7 +68,7 @@
         {
             "should_succeed": true,
             "name": "fix-simple",
-            "source": "fix (\\x : Nat -> Nat. 1)",
+            "source": "fix (\\x : Nat. 1)",
             "expected": 1
         },
         {

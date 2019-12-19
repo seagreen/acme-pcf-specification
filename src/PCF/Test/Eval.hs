@@ -2,7 +2,7 @@
 
 module PCF.Test.Eval where
 
-import Data.Aeson hiding (Result)
+import Data.Aeson
 import Data.String.QQ (s)
 import PCF.Prelude
 
@@ -10,22 +10,22 @@ import qualified Data.Aeson as Aeson
 
 data TestCase = TestCase
   { name :: Text
-  , result :: Result
+  , expected :: Expected
   , source :: Text
   } deriving (Eq, Show)
 
 instance ToJSON TestCase where
-  toJSON TestCase{name, result, source} =
+  toJSON TestCase{name, expected, source} =
     object
       [ "name" .= name
       , "should_succeed" .= True
-      , "expected" .= expected
+      , "expected" .= expectedJson
       , "source" .= source
       ]
     where
-      expected :: Aeson.Value
-      expected =
-        case result of
+      expectedJson :: Aeson.Value
+      expectedJson =
+        case expected of
           BoolVal b ->
             toJSON b
 
@@ -35,7 +35,7 @@ instance ToJSON TestCase where
           GenericSuccess ->
             Null
 
-data Result
+data Expected
   = BoolVal Bool
   | NatVal Natural
   | GenericSuccess
@@ -55,6 +55,6 @@ tests =
   , TestCase "pred-0" (NatVal 0) [s|pred 0|]
   , TestCase "is-zero" (BoolVal True) [s|is-zero 0|]
 
-  , TestCase "fix-simple" (NatVal 1) [s|fix (\x : Nat -> Nat. 1)|]
+  , TestCase "fix-simple" (NatVal 1) [s|fix (\x : Nat. 1)|]
   , TestCase "fix-realistic" (NatVal 0) [s|fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x)) 2|]
   ]
