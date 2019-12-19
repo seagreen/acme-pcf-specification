@@ -202,7 +202,10 @@ typeParser = do
 -- ArrowType NatType BoolType
 typeStarParser :: Parser Type
 typeStarParser =
-  parens typeParser <|> singleTypeParser
+  label "typeStarParser"
+    (   parens typeParser
+    <|> singleTypeParser
+    )
 
 -- |
 -- >>> parseTest singleTypeParser "Nat"
