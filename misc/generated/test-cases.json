@@ -139,6 +139,16 @@
         },
         {
             "should_succeed": true,
+            "name": "type-extraneous-parens",
+            "source": "\\x : Bool -> (Bool -> Bool). x"
+        },
+        {
+            "should_succeed": true,
+            "name": "type-",
+            "source": "\\x : (Bool -> Bool) -> Bool. x"
+        },
+        {
+            "should_succeed": true,
             "name": "ignore-newlines",
             "source": "f a\nb\n  c\n"
         }

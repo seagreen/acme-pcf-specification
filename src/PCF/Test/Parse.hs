@@ -38,8 +38,8 @@ tests =
   , TestCase "type-bool" True [s|\x : Bool. x|]
   , TestCase "type-bool-to-bool" True [s|\x : Bool -> Bool. x|]
   , TestCase "type-bool3" True [s|\x : Bool -> Bool -> Bool. x|]
-  -- , TestCase "type-extraneous-parens" True "\\x : Bool -> (Bool -> Bool). x"
-  -- , TestCase "type-" True "\\x : (Bool -> Bool) -> Bool. x"
+  , TestCase "type-extraneous-parens" True "\\x : Bool -> (Bool -> Bool). x"
+  , TestCase "type-" True "\\x : (Bool -> Bool) -> Bool. x"
 
   , TestCase "ignore-newlines" True [s|
 f a

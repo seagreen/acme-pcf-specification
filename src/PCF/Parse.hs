@@ -185,24 +185,34 @@ intParser = do
 -- * typeParser
 
 -- |
--- >>> parseTest typeParser "Nat -> Nat"
--- ArrowType NatType NatType
+-- >>> parseTest typeParser "(Nat -> Bool) -> Nat"
+-- ArrowType (ArrowType NatType BoolType) NatType
 typeParser :: Parser Type
 typeParser = do
   xs <- typeStarParser `sepBy1` symbol "->"
   -- foldr because -> is right associative:
   pure (foldr ArrowType (NonEmpty.last xs) (NonEmpty.init xs))
 
--- | Parser for the part of a type definition separated by ->
--- in function definitions.
+-- | Parser for the part of a type signature separated by ->
 --
 -- >>> parseTest typeStarParser "Nat"
 -- NatType
+--
+-- >>> parseTest typeStarParser "(Nat -> Bool)"
+-- ArrowType NatType BoolType
 typeStarParser :: Parser Type
 typeStarParser =
-  -- TODO: a good label
-      symbol "Bool" $> BoolType
-  <|> symbol "Nat" $> NatType
+  parens typeParser <|> singleTypeParser
+
+-- |
+-- >>> parseTest singleTypeParser "Nat"
+-- NatType
+singleTypeParser :: Parser Type
+singleTypeParser =
+  label "singleTypeParser"
+    (   symbol "Bool" $> BoolType
+    <|> symbol "Nat" $> NatType
+    )
 
 -------------------------------------------------------------------------------
 -- * helpers
