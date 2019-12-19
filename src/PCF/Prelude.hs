@@ -11,7 +11,7 @@ module PCF.Prelude
 
 -- Re-exports:
 
-import Prelude as X hiding (error, foldl, id, lookup, show)
+import Prelude as X hiding (error, foldl, id, lookup)
 
 import Control.Applicative as X
 import Control.Monad as X
@@ -65,10 +65,6 @@ exitWithError :: Text -> IO a
 exitWithError e = do
   TIO.hPutStrLn stderr e
   exitFailure
-
-show :: Show a => a -> Text
-show =
-  Text.pack . Prelude.show
 
 -- | For doctests.
 -- Requires the parser to consume all input (unlike 'Mega.parseTest').
