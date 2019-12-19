@@ -18,64 +18,59 @@
     ],
     "eval_tests": [
         {
-            "should_succeed": true,
             "name": "lam",
             "source": "\\x : Nat. x",
             "expected": null
         },
         {
-            "should_succeed": true,
             "name": "app",
             "source": "(\\x : Nat. x) 1",
             "expected": null
         },
         {
-            "should_succeed": true,
             "name": "let",
             "source": "let a = 1 in a",
             "expected": 1
         },
         {
-            "should_succeed": true,
             "name": "if-then-else",
             "source": "if true then 1 else 0",
             "expected": 1
         },
         {
-            "should_succeed": true,
             "name": "suc",
             "source": "suc 0",
             "expected": 1
         },
         {
-            "should_succeed": true,
             "name": "pred",
             "source": "pred 1",
             "expected": 0
         },
         {
-            "should_succeed": true,
             "name": "pred-0",
             "source": "pred 0",
             "expected": 0
         },
         {
-            "should_succeed": true,
             "name": "is-zero",
             "source": "is-zero 0",
             "expected": true
         },
         {
-            "should_succeed": true,
             "name": "fix-simple",
             "source": "fix (\\x : Nat. 1)",
             "expected": 1
         },
         {
-            "should_succeed": true,
             "name": "fix-realistic",
             "source": "fix (\\rec : Nat -> Nat. \\x : Nat. if is-zero x then 0 else rec (pred x)) 2",
             "expected": 0
+        },
+        {
+            "name": "detailed-example",
+            "source": "let\n  add =\n    fix\n      (\\recurse : Nat -> Nat -> Nat.\n        \\x : Nat. \\y : Nat.\n          if is-zero x\n            then\n              y\n\n            else\n              recurse (pred x) (suc y))\nin\n  add 3 4\n",
+            "expected": 7
         }
     ],
     "parse_tests": [
@@ -161,7 +156,7 @@
         },
         {
             "should_succeed": true,
-            "name": "type-",
+            "name": "type-function-as-argument",
             "source": "\\x : (Bool -> Bool) -> Bool. x"
         },
         {

@@ -2,43 +2,51 @@
 
 ## The Problem
 
-[RealWorld](https://github.com/gothinkster/realworld) is a fantastic tool for comparing programming languages, but I'm not interested in either frontend or backend webapps.
+[RealWorld](https://github.com/gothinkster/realworld) is a fantastic tool for comparing programming languages, but I'm not very interested in HTTP APIs.
 
 ## The Solution
 
 Make RealWorld-like specifications for more things than webapps.
 
-## PCF
+In this case, a tiny programming language called PCF.
 
-This [delightful article](https://jozefg.bitbucket.io/posts/2015-03-24-pcf.html) by Daniel Gratzer ([GitHub repo link](https://github.com/jozefg/pcf)) introduced me to PCF. He calls the variant he implements "partial computable functions".
+## Why PCF
 
-As far as I can trace it PCF originated in a paper called [LCF Considered as a Programming Language](http://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf) by G.D. Plotkin in 1977. He actually calls it "Programming Computable Functions".
+PCF is "Programming Computable Functions", a language by [Gordon Plotkin](https://en.wikipedia.org/wiki/Gordon_Plotkin). He introduced it in a 1977 paper called [LCF Considered as a Programming Language](http://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf).
 
-This is the variant we specify here. It's more complex than the one implemented by Gratzer, but I think that's a feature in this case. It will make the implementations exert themselves a little more.
+It's simply typed lambda calculus with a few extensions. These are a builtin `fix` function for recursion, primative booleans and natural numbers with a handful of operations on them, and if/then/else statements.
 
-However, this still won't be very much. PCF has few builtin functions, no user defined data types, and no type polymorphism-- ideal restrictions for a language we'd like people to be able to write in a weekend. It's basically simply typed lambda calculus with bools, natural numbers, and fix.
+This is perfect for our purposes. It's enough features to make implementations exert themselves, but still few enough that it stays a small project.
 
 ## Example
 
 Input:
 ```
-fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x))) 2
+let
+  add =
+    fix
+      (\recurse : Nat -> Nat -> Nat.
+        \x : Nat. \y : Nat.
+          if is-zero x
+            then
+              y
+
+            else
+              recurse (pred x) (suc y))
+in
+  add 3 4
 ```
 
 Output:
 ```
-0
+7
 ```
 
-## Specification
+## Informal specification
 
 This is based off of section 2 of Plotkin's [paper](http://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf): "2. The programming language, PCF".
 
 Plotkin's paper doesn't provide a concrete syntax, so we make one up.
-
-TODO: Informal description of syntax
-
-We provide [test-cases](./misc/generated/test-cases.json) for parsing and evaluating it.
 
 Additionally, we add two builtins to the language, which is allowed by section 2:
 
@@ -46,10 +54,20 @@ Additionally, we add two builtins to the language, which is allowed by section 2
 
 + polymorphic `if... then... else`: because having only two monomorphic if/then/else constructs (one that returns `Bool` and one that returns `Nat`) would be sad.
 
-## Implementation
+Examples are provided at [./misc/generated/examples.md](./misc/generated/examples.md).
+
+They're also available in [JSON form](./misc/generated/test-cases.json) for building test suites.
+
+## Reference implementation
 
 ![sloc](./misc/generated/sloc.svg)
 
-There's a reference implementation in [./src](./src). It's still WIP, most notably missing a typechecker.
+There's a reference implementation in [./src](./src).
 
-If you start on another implementation let me know. Once you're ready I'll mention it here. I definitely recommend hooking up the [test-cases](./misc/generated/test-cases.json) into your test suite. Right now it will probably also require looking at the reference source, but that will change as I write better docs.
+If you start on another implementation let me know. Once you're ready I'll mention it here. I definitely recommend hooking up the [test-cases](./misc/generated/test-cases.json) into your test suite.
+
+TODO: BNF grammar for the language
+
+## Special thanks
+
+This [delightful article](https://jozefg.bitbucket.io/posts/2015-03-24-pcf.html) by Daniel Gratzer ([GitHub repo link](https://github.com/jozefg/pcf)) introduced me to PCF, though he implements different builtins than Plotkin.

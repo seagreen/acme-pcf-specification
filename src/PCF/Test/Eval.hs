@@ -18,7 +18,6 @@ instance ToJSON TestCase where
   toJSON TestCase{name, expected, source} =
     object
       [ "name" .= name
-      , "should_succeed" .= True
       , "expected" .= expectedJson
       , "source" .= source
       ]
@@ -57,4 +56,21 @@ tests =
 
   , TestCase "fix-simple" (NatVal 1) [s|fix (\x : Nat. 1)|]
   , TestCase "fix-realistic" (NatVal 0) [s|fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x)) 2|]
+
+  -- Keep this synced with the README:
+  , TestCase "detailed-example" (NatVal 7) [s|
+let
+  add =
+    fix
+      (\recurse : Nat -> Nat -> Nat.
+        \x : Nat. \y : Nat.
+          if is-zero x
+            then
+              y
+
+            else
+              recurse (pred x) (suc y))
+in
+  add 3 4
+|]
   ]

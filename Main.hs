@@ -16,7 +16,7 @@ main = do
   checkForHelpFlag
   src <- TIO.getContents
   val <- interpret src
-  TIO.putStrLn (pretty val)
+  TIO.putStrLn (prettyValue val)
 
 interpret :: Text -> IO Untyped.Expr
 interpret src =
@@ -39,8 +39,8 @@ interpret src =
         Right val ->
           pure val
 
-pretty :: Untyped.Expr -> Text
-pretty = \case
+prettyValue :: Untyped.Expr -> Text
+prettyValue = \case
   Untyped.BoolLit b ->
     if b then "true" else "false"
 
