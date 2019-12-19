@@ -12,14 +12,9 @@ newtype TermEnv
   deriving stock (Eq, Show)
   deriving newtype (Semigroup, Monoid)
 
-lookup :: Text -> TermEnv -> Either Text Expr
+lookup :: Text -> TermEnv -> Maybe Expr
 lookup id (TermEnv env) =
-  case HashMap.lookup id env of
-    Nothing ->
-      Left id
-
-    Just expr ->
-      Right expr
+  HashMap.lookup id env
 
 insert :: Text -> Expr -> TermEnv -> TermEnv
 insert id expr (TermEnv env) =
@@ -81,10 +76,23 @@ erase = \case
 
 -- * Eval
 
-eval :: TermEnv -> Expr -> Either Text Expr
+data Error
+  = NotInScope Text
+  | NotNat Expr
+  | AppliedNonFunction Expr
+  | FixNotLambda Expr
+  | IfNotBool Expr
+  deriving (Eq, Show)
+
+eval :: TermEnv -> Expr -> Either Error Expr
 eval env = \case
   Var id ->
-    lookup id env
+    case lookup id env of
+      Nothing ->
+        Left (NotInScope id)
+
+      Just expr ->
+        Right expr
 
   Lam mClosure id expr ->
     case mClosure of
@@ -99,13 +107,13 @@ eval env = \case
     v2 <- eval env e2 -- TODO: evaluation order?
 
     let
-      assertNat :: Expr -> Either Text Natural
+      assertNat :: Expr -> Either Error Natural
       assertNat = \case
         NatLit n ->
           Right n
 
-        _ ->
-          panic "app error: not nat"
+        other ->
+          Left (NotNat other)
 
     case v1 of
       Lam mClosure id body -> do
@@ -136,7 +144,7 @@ eval env = \case
         Right (BoolLit (n == 0))
 
       _ ->
-        panic "app error: not a function"
+        Left (AppliedNonFunction v1)
 
   Let id e1 e2 -> do
     v1 <- eval env e1
@@ -149,8 +157,8 @@ eval env = \case
       Lam (Just closure) id body ->
         eval (insert id body closure) body
 
-      _other ->
-        panic "fix not evaluated lambda"
+      _ ->
+        Left (FixNotLambda v1)
 
   BoolLit b ->
     Right (BoolLit b)
@@ -165,7 +173,7 @@ eval env = \case
         eval env e2
 
       _ ->
-        panic "if-then-else: not bool"
+        Left (IfNotBool bVal)
 
   NatLit n ->
     Right (NatLit n)
