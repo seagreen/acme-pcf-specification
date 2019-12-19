@@ -15,7 +15,7 @@ data TestCase = TestCase
   } deriving (Eq, Show)
 
 instance ToJSON TestCase where
-  toJSON (TestCase{name, result, source}) =
+  toJSON TestCase{name, result, source} =
     object
       [ "name" .= name
       , "should_succeed" .= True
