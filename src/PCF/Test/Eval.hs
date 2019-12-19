@@ -56,5 +56,5 @@ tests =
   , TestCase "is-zero" (BoolVal True) [s|is-zero 0|]
 
   , TestCase "fix-simple" (NatVal 1) [s|fix (\x : Nat -> Nat. 1)|]
-  , TestCase "fix-realistic" (NatVal 0) [s|(fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x))) 2|]
+  , TestCase "fix-realistic" (NatVal 0) [s|fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x)) 2|]
   ]

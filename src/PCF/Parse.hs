@@ -1,6 +1,3 @@
--- So that we can use parseTest in doctests without complaint:
-{-# OPTIONS_GHC -fno-warn-unused-imports #-}
-
 -- | Based off my other project's parser (also MIT licensed):
 --
 --     https://github.com/seagreen/bowtie/blob/ffe75c43bc235c9f0dc8f4949295eb9727e9cdde/bowtie/src/Bowtie/Surface/Parse.hs
@@ -18,15 +15,13 @@ import PCF.Prelude hiding (many, some)
 -- Hide @sepBy1@ because we're using the one from
 -- @Control.Applicative.Combinators.NonEmpty@
 -- that returns a @NonEmpty@ list instead.
-import Text.Megaparsec hiding
-  (State, Token, parse, parseTest, runParser, sepBy1, some)
+import Text.Megaparsec hiding (parse, parseTest, sepBy1, some)
 
 import qualified Data.Char as Char
 import qualified Data.List.NonEmpty as NonEmpty
 import qualified Data.Text as Text
-import qualified Prelude
+import qualified Prelude (read)
 import qualified Text.Megaparsec as Mega
-import qualified Text.Megaparsec.Char.Lexer as Lexer
 
 type Parser = Parsec Void Text
 
@@ -34,22 +29,7 @@ type ParserErrorBundle = ParseErrorBundle Text Void
 
 parse :: Text -> Either ParserErrorBundle Expr
 parse =
-  runParser exprParser "<input>"
-
--- | Requires the parser to consume all input (unlike 'Mega.runParser').
-runParser
-  :: forall a. Parser a
-  -> FilePath
-  -> Text
-  -> Either (ParseErrorBundle Text Void) a
-runParser parser path =
-  Mega.runParser f path
-  where
-    f :: Parser a
-    f = do
-      res <- parser
-      Mega.eof
-      pure res
+  runParser (exprParser <* Mega.eof) "<input>"
 
 -------------------------------------------------------------------------------
 -- * exprParser
@@ -122,8 +102,8 @@ valOrAppParser = do
 
 -- | Parse an expression which could be a function argument.
 --
--- This excludes let expressions, if-then-else, and lambdas
--- (unless they occur inside parentheses).
+-- This excludes let expressions, if-then-else, lambdas,
+-- and function application (unless they occur inside parentheses).
 argableExprParser :: Parser Expr
 argableExprParser =
   label "argableExprParser"
@@ -141,7 +121,7 @@ argableExprParser =
 fixParser :: Parser Expr
 fixParser = do
   symbol "fix"
-  expr <- valOrAppParser -- TODO: this seems wrong
+  expr <- argableExprParser
   pure (Fix expr)
 
 varParser :: Parser Expr

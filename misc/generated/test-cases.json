@@ -57,7 +57,7 @@
         {
             "should_succeed": true,
             "name": "fix-realistic",
-            "source": "(fix (\\rec : Nat -> Nat. \\x : Nat. if is-zero x then 0 else rec (pred x))) 2",
+            "source": "fix (\\rec : Nat -> Nat. \\x : Nat. if is-zero x then 0 else rec (pred x)) 2",
             "expected": 0
         }
     ],
