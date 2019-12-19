@@ -24,6 +24,7 @@ main = do
     : "-XInstanceSigs"
     : "-XLambdaCase"
     : "-XMultiParamTypeClasses"
+    : "-XNamedFieldPuns"
     : "-XNoImplicitPrelude"
     : "-XOverloadedStrings"
     : "-XRankNTypes"

@@ -21,7 +21,6 @@ import qualified Data.Char as Char
 import qualified Data.List.NonEmpty as NonEmpty
 import qualified Data.Text as Text
 import qualified Prelude (read)
-import qualified Text.Megaparsec as Mega
 
 type Parser = Parsec Void Text
 
@@ -29,7 +28,7 @@ type ParserErrorBundle = ParseErrorBundle Text Void
 
 parse :: Text -> Either ParserErrorBundle Expr
 parse =
-  runParser (exprParser <* Mega.eof) "<input>"
+  runParser (exprParser <* eof) "<input>"
 
 -------------------------------------------------------------------------------
 -- * exprParser
@@ -129,22 +128,31 @@ varParser =
   fmap Var lowerIdParser
 
 -- |
--- >>> parseTest lowerIdParser "a"
--- "a"
+-- >>> parseTest lowerIdParser "abc"
+-- "abc"
 --
--- When we had a separate lexer this could just be tried after trying
--- to lex keyword tokens like "let" and "in". Now that we don't
--- it needs logic so that it doesn't eat those keywords.
+-- >>> parseMaybe lowerIdParser "let"
+-- Nothing
+--
+-- >>> parseTest lowerIdParser "lett"
+-- "lett"
 lowerIdParser :: Parser Text
 lowerIdParser = do
-  notFollowedBy (keyword *> satisfy (not . validIdChar))
+  notFollowedBy (keywordParser *> noFollowingIdChars)
   c <- satisfy Char.isLower
-  rest <- takeWhileP (Just "followup identifier char") validIdChar
+  rest <- takeWhileP (Just "followup identifier character") validIdChar
   pure (Text.cons c rest)
   where
-    keyword :: Parser ()
-    keyword =
+    keywordParser :: Parser ()
+    keywordParser =
       void (asum (fmap chunk keywordList))
+
+    noFollowingIdChars :: Parser ()
+    noFollowingIdChars =
+      label "no following identifier characters after keyword"
+        (   void (satisfy (not . validIdChar))
+        <|> eof
+        )
 
     keywordList :: [Text]
     keywordList =
@@ -166,8 +174,8 @@ lowerIdParser = do
       Char.isAlphaNum c || c == '-' || c == '_'
 
 -- |
--- >>> parseTest intParser "1"
--- NatLit 1
+-- >>> parseTest intParser "123"
+-- NatLit 123
 intParser :: Parser Expr
 intParser = do
   digits <- some (satisfy Char.isDigit)
@@ -204,24 +212,21 @@ parens =
   between (symbol "(") (symbol ")")
 
 lexeme :: Parser a -> Parser a
-lexeme p = do
-  -- This is an inlined an modified Text.Megaparsec.Lexer.lexeme,
-  -- which is defined as:
+lexeme p =
+  -- An inlined Text.Megaparsec.Lexer.lexeme, which is defined as:
   -- lexeme spc p = p <* spc
-  res <- p
-  spacesOrNewlines
-  pure res
+  p <* spacesOrNewlines
 
 symbol :: Text -> Parser ()
 symbol =
-  -- This is an inlined an modified Text.Megaparsec.Lexer.symbol,
+  -- An inlined and modified Text.Megaparsec.Lexer.symbol,
   -- which is defined as:
   -- symbol spc = lexeme spc . string
   void . lexeme . chunk
 
 spacesOrNewlines :: Parser ()
 spacesOrNewlines =
-  -- This is an inlined an modified Text.Megaparsec.Lexer.space.
+  -- An inlined an modified Text.Megaparsec.Lexer.space.
   hidden (skipMany spaceOrNewline1)
   where
     spaceOrNewline1 :: Parser ()
