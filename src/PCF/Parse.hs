@@ -60,7 +60,7 @@ exprParser =
     (   lamParser
     <|> letParser
     <|> ifThenElseParser
-    <|> listToAppParser
+    <|> valOrAppParser
     )
 
 -- |
@@ -93,20 +93,19 @@ letParser = do
 ifThenElseParser :: Parser Expr
 ifThenElseParser = do
   symbol "if"
-  bExpr <- lexeme listToAppParser
+  bExpr <- lexeme valOrAppParser
   symbol "then"
-  e1 <- lexeme listToAppParser
+  e1 <- lexeme exprParser
   symbol "else"
-  e2 <- lexeme listToAppParser
+  e2 <- lexeme exprParser
   pure (IfThenElse bExpr e1 e2)
 
--- | TODO: better name
---
--- >>> parseTest listToAppParser "double 1"
+-- |
+-- >>> parseTest valOrAppParser "double 1"
 -- App (Var "double") (NatLit 1)
-listToAppParser :: Parser Expr
-listToAppParser = do
-  xs <- some itemParser
+valOrAppParser :: Parser Expr
+valOrAppParser = do
+  xs <- some argableExprParser
   let
     func :: Expr
     func =
@@ -119,14 +118,15 @@ listToAppParser = do
   pure (foldl' App func args) -- foldl because App is left associative
 
 -------------------------------------------------------------------------------
--- * itemParser
+-- * argableExprParser
 
--- | TODO: better name
+-- | Parse an expression which could be a function argument.
 --
--- Note that it doesn't consume trailing whitespace.
-itemParser :: Parser Expr
-itemParser =
-  label "itemParser"
+-- This excludes let expressions, if-then-else, and lambdas
+-- (unless they occur inside parentheses).
+argableExprParser :: Parser Expr
+argableExprParser =
+  label "argableExprParser"
     (   lexeme (parens exprParser)
     <|> lexeme fixParser
     <|> symbol "true" $> BoolLit True
@@ -141,7 +141,7 @@ itemParser =
 fixParser :: Parser Expr
 fixParser = do
   symbol "fix"
-  expr <- listToAppParser
+  expr <- valOrAppParser -- TODO: this seems wrong
   pure (Fix expr)
 
 varParser :: Parser Expr
