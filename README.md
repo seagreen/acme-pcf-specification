@@ -58,15 +58,66 @@ Examples are provided at [./misc/generated/examples.md](./misc/generated/example
 
 They're also available in [JSON form](./misc/generated/test-cases.json) for building test suites.
 
+TODO: BNF grammar for the language
+
 ## Reference implementation
 
 ![sloc](./misc/generated/sloc.svg)
 
 There's a reference implementation in [./src](./src).
 
-If you start on another implementation let me know. Once you're ready I'll mention it here. I definitely recommend hooking up the [test-cases](./misc/generated/test-cases.json) into your test suite.
+## Writing your own
 
-TODO: BNF grammar for the language
+Your implementation should take PCF on STDIN and then do one of three things:
+
+1. Exit with exit code `2` if the syntax is invalid.
+
+2. Exit with exit code `3` if the program doesn't typecheck.
+
+3. Print the evaluated input to STDOUT otherwise.
+
+A few notes:
+
++ You can write anything to STDERR you want.
+
++ The only output you need to be able to print is booleans and natural numbers. If given a program that evaluates to anything else (e.g. a lambda) you can do whatever you want.
+
+If you start on your own implementation definitely let me know. Once you're ready I'll mention it here.
+
+## Testing your implementation
+
+The [test-cases](./misc/generated/test-cases.json) come in JSON form so you can hook them into your test suite. This way you get the standard tests, but in the interface you expect.
+
+There's also an executable provided for testing your implementation, though the output isn't very pretty.
+
+Run it via:
+```sh
+stack install
+acme-pcf-test <your-implementation>
+```
+
+Example output:
+```
+# Parse tests
++ var <passed>
++ lam <passed>
++ app <passed>
++ app2 <passed>
+<etc>
+
+# Typecheck tests
++ bool-literal <passed>
++ is-zero <passed>
++ app-not-function <passed>
+
+# Evaluation tests
++ lam <passed>
++ app <passed>
++ let <passed>
+<etc>
+```
+
+TODO: It doesn't check that the output of the evaluation tests is what's expected yet.
 
 ## Special thanks
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b4bec3144ab93e5b68767e94a6b498714975145d838b4dbd7fe395b7a2c664c0
+-- hash: a1ca4ed7dfd6315bc8a7006813f09b19b4a8858f765d6124c9214ec52fba1903
 
 name:           acme-pcf
 version:        0.1
@@ -18,6 +18,7 @@ library
       PCF.Prelude
       PCF.Test.Eval
       PCF.Test.Parse
+      PCF.Test.Suite
       PCF.Test.Typecheck
       PCF.Typecheck
   other-modules:
@@ -59,6 +60,30 @@ executable acme-pcf
     , parser-combinators
     , string-qq
     , text
+    , unordered-containers
+  default-language: Haskell2010
+
+executable acme-pcf-test
+  main-is: PCFTest.hs
+  other-modules:
+      Paths_acme_pcf
+  hs-source-dirs:
+      misc
+  default-extensions: StrictData BlockArguments DeriveAnyClass DeriveDataTypeable DeriveFunctor DeriveGeneric DerivingStrategies ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving InstanceSigs LambdaCase MultiParamTypeClasses NamedFieldPuns NoImplicitPrelude OverloadedStrings RankNTypes ScopedTypeVariables
+  ghc-options: -Wall -threaded -rtsopts
+  build-depends:
+      acme-pcf
+    , aeson
+    , aeson-pretty
+    , base
+    , bytestring
+    , containers
+    , megaparsec
+    , optparse-applicative
+    , parser-combinators
+    , string-qq
+    , text
+    , typed-process
     , unordered-containers
   default-language: Haskell2010
 

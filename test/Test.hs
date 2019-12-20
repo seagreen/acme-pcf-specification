@@ -1,6 +1,5 @@
 module Main where
 
-import Data.Aeson
 import Data.Aeson.Encode.Pretty (encodePretty)
 import PCF.Eval (Value(..), eval)
 import PCF.Parse (parse)
@@ -13,105 +12,35 @@ import qualified Data.Bifunctor as Bifunctor
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
-import qualified PCF.Test.Eval as TestEval
-import qualified PCF.Test.Parse as TestParse
-import qualified PCF.Test.Typecheck as TestTC
+import qualified PCF.Test.Eval as TE
+import qualified PCF.Test.Parse as TP
+import qualified PCF.Test.Suite as Suite
+import qualified PCF.Test.Typecheck as TT
 import qualified Text.Megaparsec as Mega (errorBundlePretty)
-
-data JsonTests = JsonTests
-  { parseTests :: [TestParse.TestCase]
-  , typecheckTests :: [TestTC.TestCase]
-  , evalTests :: [TestEval.TestCase]
-  } deriving (Eq, Show, Generic)
-
-instance ToJSON JsonTests where
-  toJSON = genericToJSON defaultOptions { fieldLabelModifier = camelTo2 '_' }
-
-tests :: JsonTests
-tests =
-  JsonTests TestParse.tests TestTC.tests TestEval.tests
 
 writeJsonFile :: IO ()
 writeJsonFile =
   LBS.writeFile
     "./misc/generated/test-cases.json"
-    (encodePretty tests)
-
-asMarkdownExamples :: Text
-asMarkdownExamples =
-  Text.concat
-    [ "# Parsing examples\n\n"
-    , foldMap parseToMd (parseTests tests)
-    , "# Typechecking examples\n\n"
-    , foldMap typecheckToMd (typecheckTests tests)
-    , "# Evaluation examples\n\n"
-    , foldMap evalToMd (evalTests tests)
-    ]
-  where
-    parseToMd :: TestParse.TestCase -> Text
-    parseToMd TestParse.TestCase{TestParse.name, TestParse.shouldSucceed, TestParse.source} =
-      Text.unlines
-        [ "### " <> name
-        , ""
-        , if shouldSucceed then "Should succeed:" else "Should fail:"
-        , "```"
-        , source
-        , "```"
-        , ""
-        ]
-
-    typecheckToMd :: TestTC.TestCase -> Text
-    typecheckToMd TestTC.TestCase{TestTC.name, TestTC.shouldSucceed, TestTC.source} =
-      Text.unlines
-        [ "### " <> name
-        , ""
-        , if shouldSucceed then "Should succeed:" else "Should fail:"
-        , "```"
-        , source
-        , "```"
-        , ""
-        ]
-
-    evalToMd :: TestEval.TestCase -> Text
-    evalToMd TestEval.TestCase{TestEval.name, TestEval.expected, TestEval.source} =
-      Text.unlines
-        [ "### " <> name
-        , ""
-        , "Expected: " <> case expected of
-                            BoolExpected True ->
-                              "true"
-
-                            BoolExpected False ->
-                              "false"
-
-                            NatExpected n ->
-                              Text.pack (show n)
-
-                            GenericSuccess ->
-                              "<success>"
-        , "```"
-        , source
-        , "```"
-        , ""
-        ]
+    (encodePretty Suite.tests)
 
 writeMarkdownFile :: IO ()
 writeMarkdownFile =
   TIO.writeFile
     "./misc/generated/examples.md"
-    asMarkdownExamples
+    Suite.asMarkdownExamples
 
 main :: IO ()
 main = do
   writeJsonFile
   writeMarkdownFile
   hspec do
-    describe "parser" (for_ (parseTests tests) parseTest)
-    describe "typecheck" (for_ (typecheckTests tests) typecheckTest)
-    describe "eval" (for_ (evalTests tests) evalTest)
+    describe "parser"    (for_ (Suite.parseTests     Suite.tests) parseTest)
+    describe "typecheck" (for_ (Suite.typecheckTests Suite.tests) typecheckTest)
+    describe "eval"      (for_ (Suite.evalTests      Suite.tests) evalTest)
 
-parseTest :: TestParse.TestCase -> Spec
-parseTest TestParse.TestCase{TestParse.name, TestParse.shouldSucceed, TestParse.source} =
+parseTest :: TP.TestCase -> Spec
+parseTest TP.TestCase{TP.name, TP.shouldSucceed, TP.source} =
   it
     (Text.unpack name)
     (let
@@ -124,8 +53,8 @@ parseTest TestParse.TestCase{TestParse.name, TestParse.shouldSucceed, TestParse.
          else
            res `shouldSatisfy` isLeft)
 
-typecheckTest :: TestTC.TestCase -> Spec
-typecheckTest TestTC.TestCase{TestTC.name, TestTC.shouldSucceed, TestTC.source} =
+typecheckTest :: TT.TestCase -> Spec
+typecheckTest TT.TestCase{TT.name, TT.shouldSucceed, TT.source} =
   it
     (Text.unpack name)
     case parse source of
@@ -141,8 +70,8 @@ typecheckTest TestTC.TestCase{TestTC.name, TestTC.shouldSucceed, TestTC.source} 
           else
             res `shouldSatisfy` isLeft
 
-evalTest :: TestEval.TestCase -> Spec
-evalTest TestEval.TestCase{TestEval.name, TestEval.expected, TestEval.source} =
+evalTest :: TE.TestCase -> Spec
+evalTest TE.TestCase{TE.name, TE.expected, TE.source} =
   it
     (Text.unpack name)
     case parse source of

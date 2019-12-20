@@ -60,6 +60,15 @@ executables:
       - acme-pcf
       - optparse-applicative
 
+  acme-pcf-test:
+    source-dirs: misc
+    main: PCFTest.hs
+    ghc-options: -threaded -rtsopts
+    dependencies:
+      - acme-pcf
+      - optparse-applicative
+      - typed-process
+
 tests:
   doctest:
     source-dirs: doctest

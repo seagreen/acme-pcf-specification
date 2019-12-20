@@ -33,13 +33,9 @@ import Numeric.Natural as X (Natural)
 -- Local stuff:
 
 import GHC.Stack.Types (HasCallStack)
-import System.Exit (exitFailure)
-import System.IO (stderr)
-import System.IO.Error (ioError, userError)
 import Text.Megaparsec (ShowErrorComponent, Stream, Parsec, eof)
 
 import qualified Data.Text as Text
-import qualified Data.Text.IO as TIO
 import qualified Prelude
 import qualified Text.Megaparsec as Mega (parseTest)
 
@@ -55,15 +51,6 @@ error =
 panic :: HasCallStack => Text -> a
 panic =
   error . Text.unpack
-
-throwText :: Text -> IO a
-throwText =
-  ioError . userError . Text.unpack
-
-exitWithError :: Text -> IO a
-exitWithError e = do
-  TIO.hPutStrLn stderr e
-  exitFailure
 
 -- | For doctests.
 -- Requires the parser to consume all input (unlike 'Mega.parseTest').
