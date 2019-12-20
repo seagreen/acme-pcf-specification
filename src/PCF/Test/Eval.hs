@@ -25,18 +25,18 @@ instance ToJSON TestCase where
       expectedJson :: Aeson.Value
       expectedJson =
         case expected of
-          BoolVal b ->
+          BoolExpected b ->
             toJSON b
 
-          NatVal n ->
+          NatExpected n ->
             toJSON n
 
           GenericSuccess ->
             Null
 
 data Expected
-  = BoolVal Bool
-  | NatVal Natural
+  = BoolExpected Bool
+  | NatExpected Natural
   | GenericSuccess
   deriving (Eq, Show, Ord)
 
@@ -45,20 +45,20 @@ tests =
   [ TestCase "lam" GenericSuccess [s|\x : Nat. x|]
   , TestCase "app" GenericSuccess [s|(\x : Nat. x) 1|]
 
-  , TestCase "let" (NatVal 1) [s|let a = 1 in a|]
+  , TestCase "let" (NatExpected 1) [s|let a = 1 in a|]
 
-  , TestCase "if-then-else" (NatVal 1) [s|if true then 1 else 0|]
+  , TestCase "if-then-else" (NatExpected 1) [s|if true then 1 else 0|]
 
-  , TestCase "suc" (NatVal 1) [s|suc 0|]
-  , TestCase "pred" (NatVal 0) [s|pred 1|]
-  , TestCase "pred-0" (NatVal 0) [s|pred 0|]
-  , TestCase "is-zero" (BoolVal True) [s|is-zero 0|]
+  , TestCase "suc" (NatExpected 1) [s|suc 0|]
+  , TestCase "pred" (NatExpected 0) [s|pred 1|]
+  , TestCase "pred-0" (NatExpected 0) [s|pred 0|]
+  , TestCase "is-zero" (BoolExpected True) [s|is-zero 0|]
 
-  , TestCase "fix-simple" (NatVal 1) [s|fix (\x : Nat. 1)|]
-  , TestCase "fix-realistic" (NatVal 0) [s|fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x)) 2|]
+  , TestCase "fix-simple" (NatExpected 1) [s|fix (\x : Nat. 1)|]
+  , TestCase "fix-realistic" (NatExpected 0) [s|fix (\rec : Nat -> Nat. \x : Nat. if is-zero x then 0 else rec (pred x)) 2|]
 
   -- Keep this synced with the README:
-  , TestCase "detailed-example" (NatVal 7) [s|
+  , TestCase "detailed-example" (NatExpected 7) [s|
 let
   add =
     fix

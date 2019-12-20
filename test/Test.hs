@@ -2,9 +2,9 @@ module Main where
 
 import Data.Aeson
 import Data.Aeson.Encode.Pretty (encodePretty)
-import PCF.Prelude hiding (parseTest)
-import PCF.Eval (eval, erase)
+import PCF.Eval (Value(..), eval)
 import PCF.Parse (parse)
+import PCF.Prelude hiding (parseTest)
 import PCF.Test.Eval (Expected(..))
 import PCF.Typecheck (typecheck)
 import Test.Hspec
@@ -13,11 +13,10 @@ import qualified Data.Bifunctor as Bifunctor
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
-import qualified PCF.Eval as Untyped
 import qualified PCF.Test.Eval as TestEval
 import qualified PCF.Test.Parse as TestParse
 import qualified PCF.Test.Typecheck as TestTC
-import qualified Text.Megaparsec as Mega
+import qualified Text.Megaparsec as Mega (errorBundlePretty)
 
 data JsonTests = JsonTests
   { parseTests :: [TestParse.TestCase]
@@ -79,13 +78,13 @@ asMarkdownExamples =
         [ "### " <> name
         , ""
         , "Expected: " <> case expected of
-                            BoolVal True ->
+                            BoolExpected True ->
                               "true"
 
-                            BoolVal False ->
+                            BoolExpected False ->
                               "false"
 
-                            NatVal n ->
+                            NatExpected n ->
                               Text.pack (show n)
 
                             GenericSuccess ->
@@ -158,13 +157,13 @@ evalTest TestEval.TestCase{TestEval.name, TestEval.expected, TestEval.source} =
           Right _ ->
             pure ()
 
-        let res = eval mempty (erase expr)
+        let res = eval mempty expr
         case expected of
-          BoolVal b ->
-            res `shouldBe` Right (Untyped.BoolLit b)
+          BoolExpected b ->
+            res `shouldBe` Right (BoolVal b)
 
-          NatVal n ->
-            res `shouldBe` Right (Untyped.NatLit n)
+          NatExpected n ->
+            res `shouldBe` Right (NatVal n)
 
           GenericSuccess ->
             res `shouldSatisfy` isRight

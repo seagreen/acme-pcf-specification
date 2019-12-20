@@ -14,7 +14,7 @@ In this case, a tiny programming language called PCF.
 
 PCF is "Programming Computable Functions", a language by [Gordon Plotkin](https://en.wikipedia.org/wiki/Gordon_Plotkin). He introduced it in a 1977 paper called [LCF Considered as a Programming Language](http://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf).
 
-It's simply typed lambda calculus with a few extensions. These are a builtin `fix` function for recursion, primative booleans and natural numbers with a handful of operations on them, and if/then/else statements.
+It's simply typed lambda calculus with a few extensions. These are a builtin `fix` function for recursion, primitive booleans and natural numbers with a handful of operations on them, and if/then/else statements.
 
 This is perfect for our purposes. It's enough features to make implementations exert themselves, but still few enough that it stays a small project.
 
@@ -52,7 +52,7 @@ Additionally, we add two builtins to the language, which is allowed by section 2
 
 + `let`: for ease of writing code. It's sugar for abstracting and applying, and not polymorphic.
 
-+ polymorphic `if... then... else`: because having only two monomorphic if/then/else constructs (one that returns `Bool` and one that returns `Nat`) would be sad.
++ polymorphic if/then/else: because having only two monomorphic if/then/else constructs (one that returns `Bool` and one that returns `Nat`) would be sad.
 
 Examples are provided at [./misc/generated/examples.md](./misc/generated/examples.md).
 
