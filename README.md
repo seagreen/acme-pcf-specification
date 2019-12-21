@@ -58,8 +58,6 @@ Examples are provided at [./misc/generated/examples.md](./misc/generated/example
 
 They're also available in [JSON form](./misc/generated/test-cases.json) for building test suites.
 
-TODO: BNF grammar for the language
-
 ## Reference implementation
 
 ![sloc](./misc/generated/sloc.svg)
