@@ -80,7 +80,19 @@ A few notes:
 
 + You can write anything to STDERR you want.
 
-+ The only output you need to be able to print is booleans and natural numbers. If given a program that evaluates to anything else (e.g. a lambda) you can do whatever you want.
++ The only output that must be formatted a particular way is booleans and natural numbers. They must be followed by a single newline.
+
+    For example:
+    ```
+    true
+    ```
+
+    Or:
+    ```
+    123
+    ```
+
+    If given a program that evaluates to anything else (like a lambda) you can print it however you want.
 
 If you start on your own implementation definitely let me know. Once you're ready I'll mention it here.
 
@@ -116,8 +128,6 @@ Example output:
 + let <passed>
 <etc>
 ```
-
-TODO: It doesn't check that the output of the evaluation tests is what's expected yet.
 
 ## Special thanks
 

@@ -4,6 +4,7 @@ module Main where
 
 import Data.Text.Encoding
 import Options.Applicative hiding (command)
+import PCF.Eval (Value(..), prettyValue)
 import PCF.Prelude hiding (log, parseTest)
 import System.Process.Typed
 
@@ -98,13 +99,40 @@ typecheckTest command TT.TestCase{TT.name, TT.shouldSucceed, TT.source} = do
         , "Stderr: " <> stderrTxt
         ]))
 
--- TODO: doesn't check output yet
 evalTest :: Text -> TE.TestCase -> IO ()
-evalTest command TE.TestCase{TE.name, TE.source}  = do
+evalTest command TE.TestCase{TE.name, TE.expected, TE.source}  = do
   log ("+ " <> name)
-  (exitCode, _stdoutTxt, stderrTxt) <- runTextCommand command source
+  (exitCode, stdoutTxt, stderrTxt) <- runTextCommand command source
   case exitCode of
-    ExitSuccess ->
+    ExitSuccess -> do
+      let mExpectedTxt =
+            case expected of
+              TE.BoolExpected b ->
+                Just (prettyValue (BoolVal b) <> "\n")
+
+              TE.NatExpected n ->
+                Just (prettyValue (NatVal n) <> "\n")
+
+              TE.GenericSuccess ->
+                Nothing
+
+      case mExpectedTxt of
+        Nothing ->
+          pure ()
+
+        Just expectedTxt ->
+          when
+            (stdoutTxt /= expectedTxt)
+            (die (Text.unpack (mconcat
+              [ " <failed>\n\n"
+              , "Test source:\n" <> source <> "\n\n"
+              , "Expected (note that it ends with a newline):\n"
+              , "```\n"  <> expectedTxt <> "```\n"
+              , "But got:\n"
+              , "```\n"  <> stdoutTxt <> "```\n"
+              , "Stderr: " <> stderrTxt
+              ])))
+
       logLn " <passed>"
 
     ExitFailure _ ->
