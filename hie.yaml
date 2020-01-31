@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "acme-pcf:lib"
+    - path: "./test"
+      component: "acme-pcf:test:spec"
+    - path: "."
+      component: "acme-pcf:exe:acme-pcf"
+    - path: "./misc"
+      component: "acme-pcf:exe:acme-pcf-test"
