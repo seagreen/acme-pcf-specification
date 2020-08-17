@@ -10,7 +10,6 @@ import Test.Hspec
 
 import qualified Data.Bifunctor as Bifunctor
 import qualified Data.ByteString.Lazy as LBS
-import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
 import qualified PCF.Test.Eval as TE
 import qualified PCF.Test.Parse as TP
@@ -42,7 +41,7 @@ main = do
 parseTest :: TP.TestCase -> Spec
 parseTest TP.TestCase{TP.name, TP.shouldSucceed, TP.source} =
   it
-    (Text.unpack name)
+    (toString name)
     (let
        res = Bifunctor.first Mega.errorBundlePretty (parse source)
      in
@@ -56,7 +55,7 @@ parseTest TP.TestCase{TP.name, TP.shouldSucceed, TP.source} =
 typecheckTest :: TT.TestCase -> Spec
 typecheckTest TT.TestCase{TT.name, TT.shouldSucceed, TT.source} =
   it
-    (Text.unpack name)
+    (toString name)
     case parse source of
       Left e ->
         fail (Mega.errorBundlePretty e)
@@ -73,7 +72,7 @@ typecheckTest TT.TestCase{TT.name, TT.shouldSucceed, TT.source} =
 evalTest :: TE.TestCase -> Spec
 evalTest TE.TestCase{TE.name, TE.expected, TE.source} =
   it
-    (Text.unpack name)
+    (toString name)
     case parse source of
       Left e ->
         fail (Mega.errorBundlePretty e)

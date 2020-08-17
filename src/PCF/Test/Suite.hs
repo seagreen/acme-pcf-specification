@@ -70,7 +70,7 @@ asMarkdownExamples =
                               "false"
 
                             NatExpected n ->
-                              Text.pack (show n)
+                              show n
 
                             GenericSuccess ->
                               "<success>"

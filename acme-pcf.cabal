@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a2d1df8fbd468687675ecc3d3ca80783439f4977bdf3798463d7801a06584155
+-- hash: aa2ccc25eb8fc568677b18239c11090957a095573a7483b52330ba8fe1f723ff
 
 name:           acme-pcf
 version:        0.1
@@ -35,6 +35,7 @@ library
     , containers
     , megaparsec ==8.0.0
     , parser-combinators
+    , relude
     , string-qq
     , text
     , unordered-containers
@@ -58,6 +59,7 @@ executable acme-pcf
     , megaparsec ==8.0.0
     , optparse-applicative
     , parser-combinators
+    , relude
     , string-qq
     , text
     , unordered-containers
@@ -81,6 +83,7 @@ executable acme-pcf-test
     , megaparsec ==8.0.0
     , optparse-applicative
     , parser-combinators
+    , relude
     , string-qq
     , text
     , typed-process
@@ -107,6 +110,7 @@ test-suite doctest
     , doctest
     , megaparsec ==8.0.0
     , parser-combinators
+    , relude
     , string-qq
     , text
     , unordered-containers
@@ -131,6 +135,7 @@ test-suite spec
     , hspec
     , megaparsec ==8.0.0
     , parser-combinators
+    , relude
     , string-qq
     , text
     , unordered-containers

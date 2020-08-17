@@ -38,7 +38,7 @@ prettyValue = \case
     if b then "true" else "false"
 
   NatVal n ->
-    Text.pack (show n)
+    show n
 
   other ->
     Text.pack (show other)

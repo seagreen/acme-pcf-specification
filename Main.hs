@@ -5,8 +5,8 @@ import PCF.Eval (Value(..), eval, prettyValue)
 import PCF.Parse (parse)
 import PCF.Prelude
 import PCF.Typecheck (typecheck)
-import System.Exit as X (ExitCode(..), exitWith)
-import System.IO as X (hPutStrLn, stderr)
+import System.Exit as X (ExitCode(..))
+import System.IO as X (hPutStrLn)
 
 import qualified Data.Text.IO as TIO
 import qualified Text.Megaparsec as Mega (errorBundlePretty)

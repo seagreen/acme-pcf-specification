@@ -2,10 +2,9 @@
 
 module Main where
 
-import Data.Text.Encoding
 import Options.Applicative hiding (command)
 import PCF.Eval (Value(..), prettyValue)
-import PCF.Prelude hiding (log, parseTest)
+import PCF.Prelude hiding (parseTest)
 import System.Process.Typed
 
 import qualified Data.ByteString.Lazy as LBS
@@ -16,8 +15,7 @@ import qualified PCF.Test.Parse as TP
 import qualified PCF.Test.Suite as Suite
 import qualified PCF.Test.Typecheck as TT
 
-import System.Exit as X (ExitCode(..), die)
-import System.IO as X (stderr)
+import System.Exit as X (ExitCode(..))
 
 data Config
   = Config Text -- ^ The implementation command being tested
