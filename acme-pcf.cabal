@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a1ca4ed7dfd6315bc8a7006813f09b19b4a8858f765d6124c9214ec52fba1903
+-- hash: a2d1df8fbd468687675ecc3d3ca80783439f4977bdf3798463d7801a06584155
 
 name:           acme-pcf
 version:        0.1
@@ -33,7 +33,7 @@ library
     , base
     , bytestring
     , containers
-    , megaparsec
+    , megaparsec ==8.0.0
     , parser-combinators
     , string-qq
     , text
@@ -55,7 +55,7 @@ executable acme-pcf
     , base
     , bytestring
     , containers
-    , megaparsec
+    , megaparsec ==8.0.0
     , optparse-applicative
     , parser-combinators
     , string-qq
@@ -78,7 +78,7 @@ executable acme-pcf-test
     , base
     , bytestring
     , containers
-    , megaparsec
+    , megaparsec ==8.0.0
     , optparse-applicative
     , parser-combinators
     , string-qq
@@ -105,7 +105,7 @@ test-suite doctest
     , bytestring
     , containers
     , doctest
-    , megaparsec
+    , megaparsec ==8.0.0
     , parser-combinators
     , string-qq
     , text
@@ -129,7 +129,7 @@ test-suite spec
     , bytestring
     , containers
     , hspec
-    , megaparsec
+    , megaparsec ==8.0.0
     , parser-combinators
     , string-qq
     , text

@@ -34,7 +34,7 @@ dependencies:
 
   # Notable
 
-  - megaparsec
+  - megaparsec == 8.0.0 # so I get notified if it updates
   - parser-combinators
 
   # Other

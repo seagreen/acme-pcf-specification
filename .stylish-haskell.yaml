@@ -38,6 +38,7 @@ language_extensions:
   - InstanceSigs
   - LambdaCase
   - MultiParamTypeClasses
+  - NamedFieldPuns
   - NoImplicitPrelude
   - OverloadedStrings
   - RankNTypes
