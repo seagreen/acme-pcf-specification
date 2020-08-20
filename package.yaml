@@ -1,35 +1,50 @@
 name: acme-pcf
+
 version: 0.1
+
+# NOTE: Keep in sync with ./doctest/DocTest.hs and ./.stylish-haskell.yaml
+#
+# NOTE: StrictData is on.
 default-extensions:
-  # NOTE: Keep in sync with ./doctest/DocTest.hs and ./.stylish-haskell.yaml
-
-  # Notable
-
-  - StrictData
-
-  # Other
-
+  - BangPatterns
+  - BinaryLiterals
   - BlockArguments
+  - ConstraintKinds
+  - DataKinds
+  - DefaultSignatures
   - DeriveAnyClass
   - DeriveDataTypeable
-  - DeriveFunctor
   - DeriveGeneric
+  - DeriveLift
+  - DeriveTraversable
   - DerivingStrategies
+  - EmptyCase
   - ExistentialQuantification
   - FlexibleContexts
   - FlexibleInstances
   - FunctionalDependencies
   - GeneralizedNewtypeDeriving
+  - HexFloatLiterals
+  - NoImplicitPrelude
   - InstanceSigs
+  - KindSignatures
   - LambdaCase
   - MultiParamTypeClasses
   - NamedFieldPuns
-  - NoImplicitPrelude
+  - NegativeLiterals
+  - NumericUnderscores
   - OverloadedStrings
+  - PackageImports
   - RankNTypes
   - ScopedTypeVariables
+  - StandaloneDeriving
+  - StrictData
+  - TupleSections
+  - TypeApplications
+  - TypeOperators
 
 ghc-options: -Wall
+
 dependencies:
 
   # Notable
