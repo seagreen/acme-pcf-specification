@@ -25,13 +25,13 @@ default-extensions:
   - FunctionalDependencies
   - GeneralizedNewtypeDeriving
   - HexFloatLiterals
-  - NoImplicitPrelude
   - InstanceSigs
   - KindSignatures
   - LambdaCase
   - MultiParamTypeClasses
   - NamedFieldPuns
   - NegativeLiterals
+  - NoImplicitPrelude
   - NumericUnderscores
   - OverloadedStrings
   - PackageImports
