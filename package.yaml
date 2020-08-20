@@ -28,7 +28,6 @@ default-extensions:
   - InstanceSigs
   - KindSignatures
   - LambdaCase
-  - MultiParamTypeClasses
   - NamedFieldPuns
   - NegativeLiterals
   - NoImplicitPrelude
