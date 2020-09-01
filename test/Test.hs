@@ -1,11 +1,11 @@
 module Main where
 
 import Data.Aeson.Encode.Pretty (encodePretty)
-import PCF.Eval (Value(..), eval)
-import PCF.Parse (parse)
-import PCF.Prelude hiding (parseTest)
+import Pcf.Eval (Value(..), eval)
+import Pcf.Parse (parse)
+import Pcf.Prelude hiding (parseTest)
 import PcfTest.Eval (Expected(..))
-import PCF.Typecheck (typecheck)
+import Pcf.Typecheck (typecheck)
 import Test.Hspec
 
 import qualified Data.Bifunctor as Bifunctor

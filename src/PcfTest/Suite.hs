@@ -1,7 +1,7 @@
 module PcfTest.Suite where
 
 import Data.Aeson
-import PCF.Prelude hiding (parseTest)
+import Pcf.Prelude hiding (parseTest)
 import PcfTest.Eval (Expected(..))
 
 import qualified Data.Text as Text

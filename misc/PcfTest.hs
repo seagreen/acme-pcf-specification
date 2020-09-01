@@ -3,8 +3,8 @@
 module Main where
 
 import Options.Applicative hiding (command)
-import PCF.Eval (Value(..), prettyValue)
-import PCF.Prelude hiding (parseTest)
+import Pcf.Eval (Value(..), prettyValue)
+import Pcf.Prelude hiding (parseTest)
 import System.Process.Typed
 
 import qualified Data.ByteString.Lazy as LBS

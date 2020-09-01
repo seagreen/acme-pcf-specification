@@ -4,7 +4,7 @@ module PcfTest.Parse where
 
 import Data.Aeson
 import Data.String.QQ (s)
-import PCF.Prelude
+import Pcf.Prelude
 
 data TestCase = TestCase
   { name :: Text

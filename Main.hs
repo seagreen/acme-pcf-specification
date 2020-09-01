@@ -1,10 +1,10 @@
 module Main where
 
 import Options.Applicative
-import PCF.Eval (Value(..), eval, prettyValue)
-import PCF.Parse (parse)
-import PCF.Prelude
-import PCF.Typecheck (typecheck)
+import Pcf.Eval (Value(..), eval, prettyValue)
+import Pcf.Parse (parse)
+import Pcf.Prelude
+import Pcf.Typecheck (typecheck)
 import System.Exit as X (ExitCode(..))
 import System.IO as X (hPutStrLn)
 

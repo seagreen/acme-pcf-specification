@@ -1,7 +1,7 @@
-module PCF.Eval where
+module Pcf.Eval where
 
-import PCF.Expr
-import PCF.Prelude
+import Pcf.Expr
+import Pcf.Prelude
 
 import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Text as Text

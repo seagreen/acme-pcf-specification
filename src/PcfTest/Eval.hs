@@ -4,7 +4,7 @@ module PcfTest.Eval where
 
 import Data.Aeson
 import Data.String.QQ (s)
-import PCF.Prelude
+import Pcf.Prelude
 
 import qualified Data.Aeson as Aeson
 

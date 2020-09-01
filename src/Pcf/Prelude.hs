@@ -1,6 +1,6 @@
 -- | Tweak @Relude@. Includes no domain logic.
-module PCF.Prelude
-  ( module PCF.Prelude
+module Pcf.Prelude
+  ( module Pcf.Prelude
   , module X
   ) where
 
@@ -27,7 +27,7 @@ panic =
 -- | For doctests.
 -- Requires the parser to consume all input (unlike 'Mega.parseTest').
 --
--- Can't be put in 'PCF.Parse' because that gives an @unused-top-binds@
+-- Can't be put in 'Pcf.Parse' because that gives an @unused-top-binds@
 -- error, and I don't want to disable that error module-wide.
 parseTest
   :: (ShowErrorComponent e, Show a, Stream s)

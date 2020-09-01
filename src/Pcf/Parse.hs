@@ -1,7 +1,7 @@
 -- | Based off my other project's parser (also MIT licensed):
 --
 --     https://github.com/seagreen/bowtie/blob/ffe75c43bc235c9f0dc8f4949295eb9727e9cdde/bowtie/src/Bowtie/Surface/Parse.hs
-module PCF.Parse
+module Pcf.Parse
   ( Parser
   , ParserErrorBundle
   , parse
@@ -9,8 +9,8 @@ module PCF.Parse
 
 import Control.Applicative.Combinators.NonEmpty
 import Data.Functor
-import PCF.Expr
-import PCF.Prelude hiding (many, some)
+import Pcf.Expr
+import Pcf.Prelude hiding (many, some)
 
 -- Hide @sepBy1@ because we're using the one from
 -- @Control.Applicative.Combinators.NonEmpty@

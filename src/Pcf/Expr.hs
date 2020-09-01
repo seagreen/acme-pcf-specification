@@ -1,6 +1,6 @@
-module PCF.Expr where
+module Pcf.Expr where
 
-import PCF.Prelude
+import Pcf.Prelude
 
 data Expr
   = Var Text

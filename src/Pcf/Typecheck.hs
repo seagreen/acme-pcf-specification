@@ -1,7 +1,7 @@
-module PCF.Typecheck where
+module Pcf.Typecheck where
 
-import PCF.Expr
-import PCF.Prelude
+import Pcf.Expr
+import Pcf.Prelude
 
 import qualified Data.HashMap.Strict as HashMap
 
