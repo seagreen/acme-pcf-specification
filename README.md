@@ -46,9 +46,9 @@ Output:
 
 ## Implementations
 
-+ [./impl](./impl): The reference implementation
++ [./impl](./impl): The reference implementation.
 
-+ [dang](https://github.com/xilnocas/dang): A Clojure implementation by [Nick Lawler](https://github.com/xilnocas)
++ [dang](https://github.com/xilnocas/dang): A Clojure implementation by [Nick Lawler](https://github.com/xilnocas).
 
 ## Special thanks
 
