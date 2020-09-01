@@ -62,7 +62,7 @@ They're also available in [JSON form](./spec/examples.json) for building test su
 
 ![sloc](./impl/misc/generated/sloc.svg)
 
-There's a reference implementation in [./src/Pcf](./src/Pcf).
+There's a reference implementation in [./impl/src/Pcf](./impl/src/Pcf).
 
 ## Writing your own
 
@@ -98,7 +98,7 @@ If you start on your own implementation definitely let me know. Once you're read
 
 The [test-cases](./spec/examples.json) come in JSON form so you can hook them into your test suite. This way you get the standard tests, but in the interface you expect.
 
-There's also an executable provided for testing your implementation, though the output isn't very pretty.
+There's also an executable provideds for testing your implementation, though the output isn't very pretty.
 
 Run it via:
 ```sh
