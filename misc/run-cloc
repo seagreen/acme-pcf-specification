@@ -8,7 +8,7 @@
 # sudo npm install -g gh-badges
 # sudo apt install jq
 
-SLOC1=$(cloc --json ./src ./Main.hs | jq '.Haskell.code')
+SLOC1=$(cloc --json ./src/Pcf ./Main.hs | jq '.Haskell.code')
 badge sloc "$SLOC1" :blue .svg > ./misc/generated/sloc.svg
 #     |    |
 #     |    The value (second part) of the badge.

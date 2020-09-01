@@ -62,7 +62,7 @@ They're also available in [JSON form](./misc/generated/test-cases.json) for buil
 
 ![sloc](./misc/generated/sloc.svg)
 
-There's a reference implementation in [./src](./src).
+There's a reference implementation in [./src/Pcf](./src/Pcf).
 
 ## Writing your own
 
