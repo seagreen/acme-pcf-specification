@@ -1,13 +1,13 @@
-module PCF.Test.Suite where
+module PcfTest.Suite where
 
 import Data.Aeson
 import PCF.Prelude hiding (parseTest)
-import PCF.Test.Eval (Expected(..))
+import PcfTest.Eval (Expected(..))
 
 import qualified Data.Text as Text
-import qualified PCF.Test.Eval as TE
-import qualified PCF.Test.Parse as TP
-import qualified PCF.Test.Typecheck as TT
+import qualified PcfTest.Eval as TE
+import qualified PcfTest.Parse as TP
+import qualified PcfTest.Typecheck as TT
 
 data JsonTests = JsonTests
   { parseTests :: [TP.TestCase]

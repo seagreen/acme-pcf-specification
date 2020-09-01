@@ -1,6 +1,6 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-module PCF.Test.Typecheck where
+module PcfTest.Typecheck where
 
 import Data.Aeson
 import Data.String.QQ (s)

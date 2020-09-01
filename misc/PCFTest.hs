@@ -10,10 +10,10 @@ import System.Process.Typed
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as Text
 import qualified Data.Text.IO as TIO
-import qualified PCF.Test.Eval as TE
-import qualified PCF.Test.Parse as TP
-import qualified PCF.Test.Suite as Suite
-import qualified PCF.Test.Typecheck as TT
+import qualified PcfTest.Eval as TE
+import qualified PcfTest.Parse as TP
+import qualified PcfTest.Suite as Suite
+import qualified PcfTest.Typecheck as TT
 
 import System.Exit as X (ExitCode(..))
 

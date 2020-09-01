@@ -1,6 +1,6 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-module PCF.Test.Parse where
+module PcfTest.Parse where
 
 import Data.Aeson
 import Data.String.QQ (s)

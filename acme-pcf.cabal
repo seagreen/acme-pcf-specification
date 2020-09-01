@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f1334e44ebeca3f2e661e5da841a5b5f8247d69486e84f6697b2ef2aa64ab224
+-- hash: 38c3be072fd481732fa64f35d023e94e84ae58ec138c48aba635e4cf13376df1
 
 name:           acme-pcf
 version:        0.1
@@ -16,11 +16,11 @@ library
       PCF.Expr
       PCF.Parse
       PCF.Prelude
-      PCF.Test.Eval
-      PCF.Test.Parse
-      PCF.Test.Suite
-      PCF.Test.Typecheck
       PCF.Typecheck
+      PcfTest.Eval
+      PcfTest.Parse
+      PcfTest.Suite
+      PcfTest.Typecheck
   other-modules:
       Paths_acme_pcf
   hs-source-dirs:

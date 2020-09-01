@@ -4,17 +4,17 @@ import Data.Aeson.Encode.Pretty (encodePretty)
 import PCF.Eval (Value(..), eval)
 import PCF.Parse (parse)
 import PCF.Prelude hiding (parseTest)
-import PCF.Test.Eval (Expected(..))
+import PcfTest.Eval (Expected(..))
 import PCF.Typecheck (typecheck)
 import Test.Hspec
 
 import qualified Data.Bifunctor as Bifunctor
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text.IO as TIO
-import qualified PCF.Test.Eval as TE
-import qualified PCF.Test.Parse as TP
-import qualified PCF.Test.Suite as Suite
-import qualified PCF.Test.Typecheck as TT
+import qualified PcfTest.Eval as TE
+import qualified PcfTest.Parse as TP
+import qualified PcfTest.Suite as Suite
+import qualified PcfTest.Typecheck as TT
 import qualified Text.Megaparsec as Mega (errorBundlePretty)
 
 writeJsonFile :: IO ()
