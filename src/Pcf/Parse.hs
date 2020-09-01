@@ -8,11 +8,11 @@ module Pcf.Parse
   )
 where
 
-import Control.Applicative.Combinators.NonEmpty
--- Hide @sepBy1@ because we're using the one from
--- @Control.Applicative.Combinators.NonEmpty@
+-- Hide @sepBy1@ from 'Text.Megaparsec'because we're using
+-- the one from @Control.Applicative.Combinators.NonEmpty@
 -- that returns a @NonEmpty@ list instead.
 
+import Control.Applicative.Combinators.NonEmpty
 import qualified Data.Char as Char
 import Data.Functor
 import qualified Data.List.NonEmpty as NonEmpty
