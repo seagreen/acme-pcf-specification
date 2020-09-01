@@ -58,12 +58,6 @@ Examples are provided at [./spec/examples.md](./spec/examples.md).
 
 They're also available in [JSON form](./spec/examples.json) for building test suites.
 
-## Reference implementation
-
-![sloc](./impl/misc/generated/sloc.svg)
-
-There's a reference implementation in [./impl/src/Pcf](./impl/src/Pcf).
-
 ## Writing your own
 
 Your implementation should take PCF on STDIN and then do one of three things:
