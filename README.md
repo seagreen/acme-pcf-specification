@@ -20,7 +20,7 @@ This is perfect for our purposes. It's enough features to make implementations e
 
 ## Example
 
-Plotkin doesn't give the langauge a concrete syntax, so we make one up. You can find details of this (as well as instructions for writing your own implementation) in [./spec](./spec).
+Plotkin doesn't give the langauge a concrete syntax, so we make one up. You can find the details (as well as instructions for writing your own implementation) in [./spec](./spec).
 
 Input:
 ```
@@ -43,6 +43,12 @@ Output:
 ```
 7
 ```
+
+## Implementations
+
++ [./impl](./impl): The reference implementation
+
++ [dang](https://github.com/xilnocas/dang): A Clojure implementation by [Nick Lawler](https://github.com/xilnocas)
 
 ## Special thanks
 
