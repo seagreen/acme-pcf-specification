@@ -19,13 +19,13 @@ import qualified Text.Megaparsec as Mega (errorBundlePretty)
 writeJsonFile :: IO ()
 writeJsonFile =
   LBS.writeFile
-    "./misc/generated/test-cases.json"
+    "../spec/examples.json"
     (encodePretty Suite.tests)
 
 writeMarkdownFile :: IO ()
 writeMarkdownFile =
   TIO.writeFile
-    "./misc/generated/examples.md"
+    "../spec/examples.md"
     Suite.asMarkdownExamples
 
 main :: IO ()

@@ -54,13 +54,13 @@ Additionally, we add two builtins to the language, which is allowed by section 2
 
 + polymorphic if/then/else: because having only two monomorphic if/then/else constructs (one that returns `Bool` and one that returns `Nat`) would be sad.
 
-Examples are provided at [./misc/generated/examples.md](./misc/generated/examples.md).
+Examples are provided at [./spec/examples.md](./spec/examples.md).
 
-They're also available in [JSON form](./misc/generated/test-cases.json) for building test suites.
+They're also available in [JSON form](./spec/examples.json) for building test suites.
 
 ## Reference implementation
 
-![sloc](./misc/generated/sloc.svg)
+![sloc](./impl/misc/generated/sloc.svg)
 
 There's a reference implementation in [./src/Pcf](./src/Pcf).
 
@@ -96,7 +96,7 @@ If you start on your own implementation definitely let me know. Once you're read
 
 ## Testing your implementation
 
-The [test-cases](./misc/generated/test-cases.json) come in JSON form so you can hook them into your test suite. This way you get the standard tests, but in the interface you expect.
+The [test-cases](./spec/examples.json) come in JSON form so you can hook them into your test suite. This way you get the standard tests, but in the interface you expect.
 
 There's also an executable provided for testing your implementation, though the output isn't very pretty.
 
