@@ -6,6 +6,3 @@ resolver: lts-16.6
 # (commented out because while it's on `stack ghci` dumps .dump-hi files everywhere)
 #
 # ghc-options: {"$locals": -ddump-to-file -ddump-hi}
-
-extra-deps:
-  - megaparsec-8.0.0 # important enough to lock down
