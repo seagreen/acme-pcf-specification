@@ -1,41 +1,47 @@
 module Pcf.Interpret where
 
+import qualified Data.Bifunctor as Bifunctor
 import qualified Data.Text.IO as TIO
 import Pcf.Eval (Value (..), eval, prettyValue)
-import Pcf.Parse (parse)
+import qualified Pcf.Eval as Eval
+import Pcf.Parse (ParserErrorBundle, parse)
 import Pcf.Prelude
 import Pcf.Typecheck (typecheck)
+import qualified Pcf.Typecheck as Typecheck
 import System.Exit as X (ExitCode (..))
 import System.IO as X (hPutStrLn)
 import qualified Text.Megaparsec as Mega (errorBundlePretty)
 
+data Error
+  = ErrorParse ParserErrorBundle
+  | ErrorTypecheck Typecheck.Error
+  | ErrorEval Eval.Error
+  deriving (Eq, Show)
+
+interpret :: Text -> Either Error Value
+interpret src = do
+  expr <- Bifunctor.first ErrorParse (parse src)
+  _type <- Bifunctor.first ErrorTypecheck (typecheck mempty expr)
+  Bifunctor.first ErrorEval (eval mempty expr)
+
 interpretIO :: Text -> IO ()
-interpretIO src = do
-  val <- interpret src
-  TIO.putStrLn (prettyValue val)
+interpretIO src =
+  case interpret src of
+    Left e -> do
+      let (exitCode, msg) = errorAction e
+      hPutStrLn stderr msg
+      exitWith (ExitFailure (fromIntegral exitCode))
+    Right val ->
+      TIO.putStrLn (prettyValue val)
 
-exit :: Natural -> [Char] -> IO void
-exit status msg = do
-  hPutStrLn stderr msg
-  exitWith (ExitFailure (fromIntegral status))
-
-interpret :: Text -> IO Value
-interpret src =
-  case parse src of
-    Left e ->
-      exit parseError (Mega.errorBundlePretty e)
-    Right expr -> do
-      case typecheck mempty expr of
-        Left e ->
-          exit typecheckError (show e)
-        Right _ ->
-          pure ()
-
-      case eval mempty expr of
-        Left e ->
-          exit otherError (show e)
-        Right val ->
-          pure val
+errorAction :: Error -> (Natural, String)
+errorAction = \case
+  ErrorParse e ->
+    (parseError, Mega.errorBundlePretty e)
+  ErrorTypecheck e ->
+    (typecheckError, show e)
+  ErrorEval e ->
+    (otherError, show e)
   where
     parseError :: Natural
     parseError =
