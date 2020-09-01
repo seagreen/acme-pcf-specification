@@ -2,6 +2,8 @@ module Pcf.Expr where
 
 import Pcf.Prelude
 
+{- ORMOLU_DISABLE -}
+
 data Expr
   = Var Text
   | Lam Text Type Expr -- ^ Eg @\a : Bool. a@

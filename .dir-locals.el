@@ -1,7 +1,8 @@
 ; Use with this in your Emacs config:
 ;
-; (reformatter-define stylish-haskell-format
-;   :program "stylish-haskell")
+; (use-package reformatter)
+; (reformatter-define ormolu-format
+;   :program "ormolu")
 
 ((haskell-mode
-   (mode . stylish-haskell-format-on-save)))
+   (mode . ormolu-format-on-save)))

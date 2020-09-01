@@ -2,24 +2,24 @@
 --
 --     https://github.com/seagreen/bowtie/blob/ffe75c43bc235c9f0dc8f4949295eb9727e9cdde/bowtie/src/Bowtie/Surface/Parse.hs
 module Pcf.Parse
-  ( Parser
-  , ParserErrorBundle
-  , parse
-  ) where
+  ( Parser,
+    ParserErrorBundle,
+    parse,
+  )
+where
 
 import Control.Applicative.Combinators.NonEmpty
-import Data.Functor
-import Pcf.Expr
-import Pcf.Prelude hiding (many, some)
-
 -- Hide @sepBy1@ because we're using the one from
 -- @Control.Applicative.Combinators.NonEmpty@
 -- that returns a @NonEmpty@ list instead.
-import Text.Megaparsec hiding (parse, parseTest, sepBy1, some)
 
 import qualified Data.Char as Char
+import Data.Functor
 import qualified Data.List.NonEmpty as NonEmpty
 import qualified Data.Text as Text
+import Pcf.Expr
+import Pcf.Prelude hiding (many, some)
+import Text.Megaparsec hiding (parse, parseTest, sepBy1, some)
 import qualified Prelude (read)
 
 type Parser = Parsec Void Text
@@ -31,15 +31,17 @@ parse =
   runParser (exprParser <* eof) "<input>"
 
 -------------------------------------------------------------------------------
+
 -- * exprParser
 
 exprParser :: Parser Expr
 exprParser =
-  label "exprParser"
-    (   lamParser
-    <|> letParser
-    <|> ifThenElseParser
-    <|> valOrAppParser
+  label
+    "exprParser"
+    ( lamParser
+        <|> letParser
+        <|> ifThenElseParser
+        <|> valOrAppParser
     )
 
 -- |
@@ -85,18 +87,18 @@ ifThenElseParser = do
 valOrAppParser :: Parser Expr
 valOrAppParser = do
   xs <- some argableExprParser
-  let
-    func :: Expr
-    func =
-      NonEmpty.head xs
+  let func :: Expr
+      func =
+        NonEmpty.head xs
 
-    args :: [Expr]
-    args =
-      NonEmpty.tail xs
+      args :: [Expr]
+      args =
+        NonEmpty.tail xs
 
   pure (foldl' App func args) -- foldl because App is left associative
 
 -------------------------------------------------------------------------------
+
 -- * argableExprParser
 
 -- | Parse an expression which could be a function argument.
@@ -105,16 +107,17 @@ valOrAppParser = do
 -- and function application (unless they occur inside parentheses).
 argableExprParser :: Parser Expr
 argableExprParser =
-  label "argableExprParser"
-    (   lexeme (parens exprParser)
-    <|> lexeme fixParser
-    <|> symbol "true" $> BoolLit True
-    <|> symbol "false" $> BoolLit False
-    <|> symbol "suc" $> Suc
-    <|> symbol "pred" $> Pred
-    <|> symbol "is-zero" $> IsZero
-    <|> lexeme varParser
-    <|> lexeme intParser
+  label
+    "argableExprParser"
+    ( lexeme (parens exprParser)
+        <|> lexeme fixParser
+        <|> symbol "true" $> BoolLit True
+        <|> symbol "false" $> BoolLit False
+        <|> symbol "suc" $> Suc
+        <|> symbol "pred" $> Pred
+        <|> symbol "is-zero" $> IsZero
+        <|> lexeme varParser
+        <|> lexeme intParser
     )
 
 fixParser :: Parser Expr
@@ -149,24 +152,25 @@ lowerIdParser = do
 
     noFollowingIdChars :: Parser ()
     noFollowingIdChars =
-      label "no following identifier characters after keyword"
-        (   void (satisfy (not . validIdChar))
-        <|> eof
+      label
+        "no following identifier characters after keyword"
+        ( void (satisfy (not . validIdChar))
+            <|> eof
         )
 
     keywordList :: [Text]
     keywordList =
-      [ "let"
-      , "in"
-      , "fix"
-      , "if"
-      , "then"
-      , "else"
-      , "true"
-      , "false"
-      , "suc"
-      , "pred"
-      , "is-zero"
+      [ "let",
+        "in",
+        "fix",
+        "if",
+        "then",
+        "else",
+        "true",
+        "false",
+        "suc",
+        "pred",
+        "is-zero"
       ]
 
     validIdChar :: Char -> Bool
@@ -182,6 +186,7 @@ intParser = do
   pure (NatLit (Prelude.read (NonEmpty.toList digits))) -- TODO: read
 
 -------------------------------------------------------------------------------
+
 -- * typeParser
 
 -- |
@@ -202,9 +207,10 @@ typeParser = do
 -- ArrowType NatType BoolType
 typeStarParser :: Parser Type
 typeStarParser =
-  label "typeStarParser"
-    (   parens typeParser
-    <|> singleTypeParser
+  label
+    "typeStarParser"
+    ( parens typeParser
+        <|> singleTypeParser
     )
 
 -- |
@@ -212,12 +218,14 @@ typeStarParser =
 -- NatType
 singleTypeParser :: Parser Type
 singleTypeParser =
-  label "singleTypeParser"
-    (   symbol "Bool" $> BoolType
-    <|> symbol "Nat" $> NatType
+  label
+    "singleTypeParser"
+    ( symbol "Bool" $> BoolType
+        <|> symbol "Nat" $> NatType
     )
 
 -------------------------------------------------------------------------------
+
 -- * helpers
 
 parens :: Parser a -> Parser a
@@ -245,6 +253,7 @@ spacesOrNewlines =
     spaceOrNewline1 :: Parser ()
     spaceOrNewline1 =
       void
-        (takeWhile1P
-          (Just "space or newline (U+0020 or U+000A)")
-          (\c -> c == ' ' || c == '\n'))
+        ( takeWhile1P
+            (Just "space or newline (U+0020 or U+000A)")
+            (\c -> c == ' ' || c == '\n')
+        )

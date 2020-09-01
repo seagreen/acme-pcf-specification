@@ -1,14 +1,13 @@
 module Main where
 
+import qualified Data.Text.IO as TIO
 import Options.Applicative
-import Pcf.Eval (Value(..), eval, prettyValue)
+import Pcf.Eval (Value (..), eval, prettyValue)
 import Pcf.Parse (parse)
 import Pcf.Prelude
 import Pcf.Typecheck (typecheck)
-import System.Exit as X (ExitCode(..))
+import System.Exit as X (ExitCode (..))
 import System.IO as X (hPutStrLn)
-
-import qualified Data.Text.IO as TIO
 import qualified Text.Megaparsec as Mega (errorBundlePretty)
 
 main :: IO ()
@@ -23,19 +22,16 @@ interpret src =
   case parse src of
     Left e ->
       exit parseError (Mega.errorBundlePretty e)
-
     Right expr -> do
       case typecheck mempty expr of
         Left e ->
           exit typecheckError (show e)
-
         Right _ ->
           pure ()
 
       case eval mempty expr of
         Left e ->
           exit otherError (show e)
-
         Right val ->
           pure val
   where

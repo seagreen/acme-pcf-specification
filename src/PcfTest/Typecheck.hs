@@ -7,17 +7,18 @@ import Data.String.QQ (s)
 import Pcf.Prelude
 
 data TestCase = TestCase
-  { name :: Text
-  , shouldSucceed :: Bool
-  , source :: Text
-  } deriving (Eq, Show, Generic)
+  { name :: Text,
+    shouldSucceed :: Bool,
+    source :: Text
+  }
+  deriving (Eq, Show, Generic)
 
 instance ToJSON TestCase where
-  toJSON = genericToJSON defaultOptions { fieldLabelModifier = camelTo2 '_' }
+  toJSON = genericToJSON defaultOptions {fieldLabelModifier = camelTo2 '_'}
 
 tests :: [TestCase]
 tests =
-  [ TestCase "bool-literal" True [s|true|]
-  , TestCase "is-zero" True [s|is-zero 1|]
-  , TestCase "app-not-function" False [s|0 1|]
+  [ TestCase "bool-literal" True [s|true|],
+    TestCase "is-zero" True [s|is-zero 1|],
+    TestCase "app-not-function" False [s|0 1|]
   ]
