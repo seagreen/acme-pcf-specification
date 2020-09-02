@@ -12,7 +12,7 @@ In this case, a tiny programming language called PCF.
 
 ## Why PCF
 
-PCF is "Programming Computable Functions", a language by [Gordon Plotkin](https://en.wikipedia.org/wiki/Gordon_Plotkin). He introduced it in a 1977 paper called [LCF Considered as a Programming Language](httsp://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf).
+PCF is "Programming Computable Functions", a language by [Gordon Plotkin](https://en.wikipedia.org/wiki/Gordon_Plotkin). He introduced it in a 1977 paper called [LCF Considered as a Programming Language](https://homepages.inf.ed.ac.uk/gdp/publications/LCF.pdf).
 
 It's simply typed lambda calculus with a few extensions. These are a builtin `fix` function for recursion, primitive booleans and natural numbers with a handful of operations on them, and if/then/else statements.
 
