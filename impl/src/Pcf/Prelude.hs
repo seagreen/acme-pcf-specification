@@ -1,4 +1,4 @@
--- | Tweak @Relude@.
+-- | Tweak 'Relude'.
 module Pcf.Prelude
   ( module Pcf.Prelude,
     module X,
