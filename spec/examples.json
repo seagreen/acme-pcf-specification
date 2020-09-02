@@ -7,13 +7,63 @@
         },
         {
             "should_succeed": true,
+            "name": "nat-literal",
+            "source": "1"
+        },
+        {
+            "should_succeed": true,
             "name": "is-zero",
             "source": "is-zero 1"
         },
         {
             "should_succeed": false,
+            "name": "is-zero-applied-to-bool",
+            "source": "is-zero true"
+        },
+        {
+            "should_succeed": true,
+            "name": "lambda",
+            "source": "(\\x : Nat. x)"
+        },
+        {
+            "should_succeed": false,
+            "name": "not-in-scope",
+            "source": "a"
+        },
+        {
+            "should_succeed": false,
             "name": "app-not-function",
             "source": "0 1"
+        },
+        {
+            "should_succeed": false,
+            "name": "applied-wrong-type",
+            "source": "(\\x : Nat. x) true"
+        },
+        {
+            "should_succeed": false,
+            "name": "if-not-bool",
+            "source": "if 1 then true else false"
+        },
+        {
+            "should_succeed": false,
+            "name": "if-statement-mismatch",
+            "source": "if true then 1 else false"
+        },
+        {
+            "should_succeed": true,
+            "name": "fix",
+            "source": "fix (\\x : Nat. 1)"
+        },
+        {
+            "should_succeed": false,
+            "name": "fix-not-lambda",
+            "source": "fix 1"
+        },
+        {
+            "should_succeed": false,
+            "name": "fix-type-mismatch",
+            "source": "fix (\\x : Nat -> Nat. 1)"
         }
     ],
     "eval_tests": [

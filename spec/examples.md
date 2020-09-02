@@ -2,126 +2,126 @@
 
 ### var
 
-Should succeed:
+Should parse:
 ```
 x
 ```
 
 ### lam
 
-Should succeed:
+Should parse:
 ```
 \x : Nat. x
 ```
 
 ### app
 
-Should succeed:
+Should parse:
 ```
 f a
 ```
 
 ### app2
 
-Should succeed:
+Should parse:
 ```
 f a b
 ```
 
 ### app-parens
 
-Should succeed:
+Should parse:
 ```
 f (a b)
 ```
 
 ### app-extraneous-parens
 
-Should succeed:
+Should parse:
 ```
 (f a) b
 ```
 
 ### let
 
-Should succeed:
+Should parse:
 ```
 let a = 1 in a
 ```
 
 ### fix
 
-Should succeed:
+Should parse:
 ```
 fix (\x : Nat -> Nat. 1)
 ```
 
 ### bool-true
 
-Should succeed:
+Should parse:
 ```
 true
 ```
 
 ### bool-false
 
-Should succeed:
+Should parse:
 ```
 false
 ```
 
 ### if-then-else
 
-Should succeed:
+Should parse:
 ```
 if true then 1 else 0
 ```
 
 ### nat
 
-Should succeed:
+Should parse:
 ```
 1
 ```
 
 ### type-bool
 
-Should succeed:
+Should parse:
 ```
 \x : Bool. x
 ```
 
 ### type-bool-to-bool
 
-Should succeed:
+Should parse:
 ```
 \x : Bool -> Bool. x
 ```
 
 ### type-bool3
 
-Should succeed:
+Should parse:
 ```
 \x : Bool -> Bool -> Bool. x
 ```
 
 ### type-extraneous-parens
 
-Should succeed:
+Should parse:
 ```
 \x : Bool -> (Bool -> Bool). x
 ```
 
 ### type-function-as-argument
 
-Should succeed:
+Should parse:
 ```
 \x : (Bool -> Bool) -> Bool. x
 ```
 
 ### ignore-newlines
 
-Should succeed:
+Should parse:
 ```
 f a
 b
@@ -131,7 +131,7 @@ b
 
 ### invalid-symbol
 
-Should fail:
+Should not parse:
 ```
 !
 ```
@@ -140,23 +140,93 @@ Should fail:
 
 ### bool-literal
 
-Should succeed:
+Should typecheck:
 ```
 true
 ```
 
+### nat-literal
+
+Should typecheck:
+```
+1
+```
+
 ### is-zero
 
-Should succeed:
+Should typecheck:
 ```
 is-zero 1
 ```
 
+### is-zero-applied-to-bool
+
+Should not typecheck:
+```
+is-zero true
+```
+
+### lambda
+
+Should typecheck:
+```
+(\x : Nat. x)
+```
+
+### not-in-scope
+
+Should not typecheck:
+```
+a
+```
+
 ### app-not-function
 
-Should fail:
+Should not typecheck:
 ```
 0 1
+```
+
+### applied-wrong-type
+
+Should not typecheck:
+```
+(\x : Nat. x) true
+```
+
+### if-not-bool
+
+Should not typecheck:
+```
+if 1 then true else false
+```
+
+### if-statement-mismatch
+
+Should not typecheck:
+```
+if true then 1 else false
+```
+
+### fix
+
+Should typecheck:
+```
+fix (\x : Nat. 1)
+```
+
+### fix-not-lambda
+
+Should not typecheck:
+```
+fix 1
+```
+
+### fix-type-mismatch
+
+Should not typecheck:
+```
+fix (\x : Nat -> Nat. 1)
 ```
 
 # Evaluation examples

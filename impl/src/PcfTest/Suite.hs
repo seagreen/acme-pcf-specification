@@ -38,7 +38,7 @@ asMarkdownExamples =
       Text.unlines
         [ "### " <> name,
           "",
-          if shouldSucceed then "Should succeed:" else "Should fail:",
+          if shouldSucceed then "Should parse:" else "Should not parse:",
           "```",
           source,
           "```",
@@ -50,7 +50,7 @@ asMarkdownExamples =
       Text.unlines
         [ "### " <> name,
           "",
-          if shouldSucceed then "Should succeed:" else "Should fail:",
+          if shouldSucceed then "Should typecheck:" else "Should not typecheck:",
           "```",
           source,
           "```",
