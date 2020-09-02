@@ -77,7 +77,7 @@ executables:
 
   acme-pcf-test:
     source-dirs: misc
-    main: PcfTest.hs
+    main: PcfTestMain.hs
     ghc-options: -threaded -rtsopts
     dependencies:
       - acme-pcf

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b4653ce727cb7be730d323ff145865313057c8ba6b99c0fbf070c3cc4ae3dc44
+-- hash: 85ecac074ac74ea6408c48b230623219f7c7399d7b74789f70a5f142e5467bf0
 
 name:           acme-pcf
 version:        0.1
@@ -67,7 +67,7 @@ executable acme-pcf
   default-language: Haskell2010
 
 executable acme-pcf-test
-  main-is: PcfTest.hs
+  main-is: PcfTestMain.hs
   other-modules:
       Paths_acme_pcf
   hs-source-dirs:
