@@ -2,7 +2,7 @@ name: acme-pcf
 
 version: 0.1
 
-# NOTE: Keep in sync with ./doctest/DocTest.hs and ./.stylish-haskell.yaml
+# NOTE: Keep in sync with ./doctest/DocTest.hs
 #
 # NOTE: StrictData is on.
 default-extensions:
