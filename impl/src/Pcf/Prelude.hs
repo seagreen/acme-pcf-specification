@@ -1,4 +1,4 @@
--- | Tweak @Relude@. Includes no domain logic.
+-- | Tweak @Relude@.
 module Pcf.Prelude
   ( module Pcf.Prelude,
     module X,
